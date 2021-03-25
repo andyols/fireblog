@@ -1,4 +1,4 @@
-import { Avatar, Button, HStack } from '@chakra-ui/react'
+import { Avatar, Button, Heading, HStack } from '@chakra-ui/react'
 import { MeContext } from '@lib/context'
 import { auth } from '@lib/firebase'
 import { useRouter } from 'next/dist/client/router'
@@ -12,24 +12,39 @@ export const Navbar: React.FC = () => {
   return (
     <HStack justify='space-between' p={4} bg='messenger.500'>
       <Link href='/'>
-        <Button>Home</Button>
+        <Heading _hover={{ cursor: 'pointer', transform: 'scale(1.05)' }}>
+          🔥
+        </Heading>
       </Link>
-      {user && (
-        <HStack>
-          <Link href='/admin'>
-            <Button>Create a Post</Button>
+      <HStack>
+        {!user && !router.pathname.includes('enter') && (
+          <Link href='/enter'>
+            <Button colorScheme='whatsapp'>Login</Button>
           </Link>
-          <Link href={`/${username}`}>
-            <Avatar src={user.photoURL || ''} />
-          </Link>
-        </HStack>
-      )}
-      {!user && !router.pathname.includes('enter') && (
-        <Link href='/enter'>
-          <Button>Login</Button>
-        </Link>
-      )}
-      {user && <Button onClick={() => auth.signOut()}>Logout</Button>}
+        )}
+        {user && (
+          <>
+            {username && (
+              <Link href='/admin'>
+                <Button colorScheme='whatsapp'>Create a Post</Button>
+              </Link>
+            )}
+            {user && (
+              <Button
+                variant='ghost'
+                color='white'
+                _hover={{ bg: 'messenger.600' }}
+                onClick={() => auth.signOut()}
+              >
+                Logout
+              </Button>
+            )}
+            <Link href={`/${username}`}>
+              <Avatar src={user.photoURL || ''} />
+            </Link>
+          </>
+        )}
+      </HStack>
     </HStack>
   )
 }

@@ -4,7 +4,7 @@ import { useMeContext } from '@lib/context'
 import { auth, googleAuthProvider } from '@lib/firebase'
 import { NextPage } from 'next'
 import { useRouter } from 'next/dist/client/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const Enter: NextPage = () => {
   const { user, username } = useMeContext()
@@ -14,33 +14,27 @@ const Enter: NextPage = () => {
     if (user && username) {
       router.replace('/')
     }
-  })
+  }, [user, username])
 
   return (
     <Layout variant='small'>
       <Stack align='center'>
-        {user ? !username && <UsernameForm /> : <SignInButton />}
+        {user && !username && <UsernameForm />}
+        {!user && <SignInButton />}
       </Stack>
     </Layout>
   )
 }
 
 const SignInButton = () => {
-  const [loading, setLoading] = useState(false)
   const handleSignIn = async () => {
-    setLoading(true)
     try {
-      const { user } = await auth.signInWithPopup(googleAuthProvider)
-      setLoading(false)
-    } catch {
-      setLoading(false)
+      await auth.signInWithPopup(googleAuthProvider)
+    } catch (e) {
+      console.error(e.message)
     }
   }
-  return (
-    <Button isLoading={loading} onClick={handleSignIn}>
-      Sign In With Google
-    </Button>
-  )
+  return <Button onClick={handleSignIn}>Sign In With Google</Button>
 }
 const UsernameForm = () => <Input />
 

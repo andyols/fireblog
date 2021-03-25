@@ -2,7 +2,7 @@ import { User } from '@firebase/auth-types'
 import { createContext, useContext } from 'react'
 
 export type ContextType = {
-  user: User | null
+  user: User | null | undefined
   username: string | null
 }
 
