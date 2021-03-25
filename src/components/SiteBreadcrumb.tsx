@@ -8,7 +8,7 @@ import {
 import Link from 'next/link'
 import React from 'react'
 
-export const SiteBreadcrumb: React.FC = () => {
+export const SiteBreadcrumb: React.FC = ({}) => {
   const slug = 'post1'
   const username = 'andyols'
 
@@ -16,33 +16,33 @@ export const SiteBreadcrumb: React.FC = () => {
     <HStack placeSelf='center'>
       <Breadcrumb as={Code}>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href='/'>Home</Link>
+          <BreadcrumbLink as={Link} href='/'>
+            Home
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href='/enter'>Enter</Link>
+          <BreadcrumbLink as={Link} href='/enter'>
+            Enter
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href='/admin'>Admin Posts</Link>
+          <BreadcrumbLink as={Link} href='/admin'>
+            My Posts
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href={`/admin/${slug}`}>Admin Post Edit</Link>
+          <BreadcrumbLink as={Link} href={`/admin/${slug}`}>
+            Edit Post
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href={`/${username}`}>User Profile</Link>
+          <BreadcrumbLink as={Link} href={`/${username}`}>
+            Profile
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href={`/${username}/${slug}`}>Post</Link>
+          <BreadcrumbLink as={Link} href={`/${username}/${slug}`}>
+            Home
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
