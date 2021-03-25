@@ -2,12 +2,12 @@ import { Heading } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { NextPage } from 'next'
 
-const Index: NextPage = () => {
+const Post: NextPage = () => {
   return (
     <Layout>
-      <Heading>Hello, world!</Heading>
+      <Heading>Post Page</Heading>
     </Layout>
   )
 }
 
-export default Index
+export default Post
