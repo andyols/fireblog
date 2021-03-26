@@ -28,6 +28,7 @@ const UserProfilePage: NextPage<PageProps> = ({ user, posts }) => {
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { username } = query
 
+  // get user document data associated with username in url
   const userDoc = await getUserWithUsername(username as string)
 
   let user = null
@@ -35,6 +36,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   if (userDoc) {
     user = userDoc.data()
+
+    // setup posts query
     const postsQuery = userDoc.ref
       .collection('posts')
       .where('published', '==', true)
@@ -42,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       .limit(5)
 
     try {
+      // attempt query and convert each post document to JSON
       posts = (await postsQuery.get()).docs.map(postToJSON)
     } catch (e) {
       console.error(e.message)

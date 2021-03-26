@@ -1,5 +1,5 @@
 import { User } from '@firebase/auth-types'
-import { createContext, useContext } from 'react'
+import { createContext } from 'react'
 
 export type ContextType = {
   user: User | null | undefined
@@ -12,5 +12,3 @@ export const UserContext = createContext<ContextType>({
 })
 
 UserContext.displayName = 'User'
-
-export const useMeContext = () => useContext(UserContext)

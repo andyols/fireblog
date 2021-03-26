@@ -2,7 +2,7 @@ import { Heading } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { NextPage } from 'next'
 
-const AdminPosts: NextPage = () => {
+const AdminPostsPage: NextPage = () => {
   return (
     <Layout>
       <Heading>Admin Posts Page</Heading>
@@ -10,4 +10,4 @@ const AdminPosts: NextPage = () => {
   )
 }
 
-export default AdminPosts
+export default AdminPostsPage

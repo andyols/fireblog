@@ -12,7 +12,10 @@ export const Navbar: React.FC = () => {
   return (
     <HStack justify='space-between' p={4} bg='messenger.500'>
       <Link href='/'>
-        <Heading _hover={{ cursor: 'pointer', transform: 'scale(1.05)' }}>
+        <Heading
+          as='a'
+          _hover={{ cursor: 'pointer', transform: 'scale(1.05)' }}
+        >
           🔥
         </Heading>
       </Link>
@@ -30,12 +33,7 @@ export const Navbar: React.FC = () => {
               </Link>
             )}
             {user && (
-              <Button
-                variant='ghost'
-                color='white'
-                _hover={{ bg: 'messenger.600' }}
-                onClick={() => auth.signOut()}
-              >
+              <Button colorScheme='messenger' onClick={() => auth.signOut()}>
                 Logout
               </Button>
             )}
