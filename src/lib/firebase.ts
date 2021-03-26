@@ -1,4 +1,8 @@
-import { DocumentData, DocumentSnapshot } from '@firebase/firestore-types'
+import {
+  DocumentData,
+  DocumentSnapshot,
+  Timestamp
+} from '@firebase/firestore-types'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -28,7 +32,7 @@ export const storage = firebase.storage()
 
 /**
  * Gets a users/{uid} document with username
- * @param {string} username
+ * @param username
  * @returns the user document in a promise
  */
 export const getUserWithUsername = async (username: string) => {
@@ -40,7 +44,7 @@ export const getUserWithUsername = async (username: string) => {
 
 /**
  * Converts a firestore document to JSON
- * @param {DocumentSnapshot} doc
+ * @param doc
  */
 export const postToJSON = (doc: DocumentSnapshot) => {
   const data = doc.data()
@@ -52,4 +56,14 @@ export const postToJSON = (doc: DocumentSnapshot) => {
     createdAt: data.createdAt.toMillis() as string,
     updatedAt: data.createdAt.toMillis() as string
   }
+}
+
+/**
+ * Ensures a given timestamp is a firestore Timestamp
+ * @param timestamp
+ */
+export const convertTimestamp = (timestamp: number | Timestamp) => {
+  return typeof timestamp === 'number'
+    ? firebase.firestore.Timestamp.fromMillis(timestamp)
+    : timestamp
 }

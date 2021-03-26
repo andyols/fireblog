@@ -6,6 +6,7 @@ import {
   Text
 } from '@chakra-ui/react'
 import { Post } from '@lib/types'
+import Link from 'next/link'
 import React from 'react'
 
 interface PostFeedProps {
@@ -26,20 +27,32 @@ export const PostFeed: React.FC<PostFeedProps> = ({ posts }) => {
 }
 
 const PostItem: React.FC<PostItemProps> = ({ post }) => {
+  const wordCount = post.content.trim().split(/\s+/g).length
+  const minutesToRead = (wordCount / 100 + 1).toFixed(0)
+
   return (
     <HStack
       justify='space-between'
       bg='white'
       p={4}
       borderRadius='base'
-      shadow='base'
+      shadow='xs'
     >
       <Stack spacing={0}>
-        <ChakraLink fontWeight='semibold'>{post.title}</ChakraLink>
-        <ChakraLink color='messenger.500'>@{post.username}</ChakraLink>
-        <Text pt={2}>{post.content}</Text>
+        <Link href={`/${post.username}/${post.slug}`}>
+          <ChakraLink fontWeight='semibold'>{post.title}</ChakraLink>
+        </Link>
+        <Link href={`/${post.username}`}>
+          <ChakraLink color='messenger.500'>@{post.username}</ChakraLink>
+        </Link>
+        <Text pt={2} color='gray.600' fontSize='sm'>
+          ⏳ {minutesToRead} min read
+        </Text>
       </Stack>
-      <Stack placeSelf='start'>
+      <HStack placeSelf='start' spacing={0}>
+        <Text mr={-2} color='gray.800' fontSize='sm' fontWeight='semibold'>
+          {post.blazeCount} blaze{post.blazeCount !== 1 && 's'}
+        </Text>
         <Button
           variant='link'
           _hover={{ textDecor: 'none', filter: 'grayscale(0)' }}
@@ -47,7 +60,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
         >
           🔥
         </Button>
-      </Stack>
+      </HStack>
     </HStack>
   )
 }

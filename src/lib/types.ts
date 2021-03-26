@@ -1,9 +1,12 @@
+import { Timestamp } from '@firebase/firestore-types'
+
 export type Post = {
-  title: string
-  content: string
-  username: string
-  slug: string
   blazeCount: number
+  content: string
+  createdAt: number | Timestamp
+  slug: string
+  title: string
+  username: string
 }
 
 export type User = {

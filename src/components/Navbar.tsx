@@ -10,7 +10,7 @@ export const Navbar: React.FC = () => {
   const router = useRouter()
 
   return (
-    <HStack justify='space-between' p={4} bg='messenger.500'>
+    <HStack justify='space-between' p={4} bg='messenger.500' shadow='xs'>
       <Link href='/'>
         <Heading
           as='a'
