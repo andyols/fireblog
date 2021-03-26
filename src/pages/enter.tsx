@@ -1,7 +1,8 @@
-import { Button, Input, Stack } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
+import { SignInButtons } from '@components/SignInButtons'
+import { UsernameForm } from '@components/UsernameForm'
 import { useMeContext } from '@lib/context'
-import { auth, googleAuthProvider } from '@lib/firebase'
 import { NextPage } from 'next'
 import { useRouter } from 'next/dist/client/router'
 import { useEffect } from 'react'
@@ -20,22 +21,10 @@ const Enter: NextPage = () => {
     <Layout variant='small'>
       <Stack align='center'>
         {user && !username && <UsernameForm />}
-        {!user && <SignInButton />}
+        {!user && <SignInButtons />}
       </Stack>
     </Layout>
   )
 }
-
-const SignInButton = () => {
-  const handleSignIn = async () => {
-    try {
-      await auth.signInWithPopup(googleAuthProvider)
-    } catch (e) {
-      console.error(e.message)
-    }
-  }
-  return <Button onClick={handleSignIn}>Sign In With Google</Button>
-}
-const UsernameForm = () => <Input />
 
 export default Enter
