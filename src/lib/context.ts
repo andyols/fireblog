@@ -6,11 +6,11 @@ export type ContextType = {
   username: string | null
 }
 
-export const MeContext = createContext<ContextType>({
+export const UserContext = createContext<ContextType>({
   user: null,
   username: null
 })
 
-MeContext.displayName = 'Me'
+UserContext.displayName = 'User'
 
-export const useMeContext = () => useContext(MeContext)
+export const useMeContext = () => useContext(UserContext)

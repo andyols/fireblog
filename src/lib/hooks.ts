@@ -10,8 +10,10 @@ export const useUserData = () => {
     let unsubscribe
 
     if (user) {
-      const ref = firestore.collection('users').doc()
-      unsubscribe = ref.onSnapshot((doc) => setUsername(doc.data()?.username))
+      const ref = firestore.collection('users').doc(user.uid)
+      unsubscribe = ref.onSnapshot((doc) => {
+        setUsername(doc.data()?.username)
+      })
     } else {
       setUsername(null)
     }
