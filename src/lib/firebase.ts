@@ -67,3 +67,13 @@ export const convertTimestamp = (timestamp: number | Timestamp) => {
     ? firebase.firestore.Timestamp.fromMillis(timestamp)
     : timestamp
 }
+
+/**
+ * Converts a given timestamp to a JavaScript date
+ * @param timestamp
+ */
+export const timestampToDate = (timestamp: number | Timestamp) => {
+  return typeof timestamp === 'number'
+    ? new Date(timestamp)
+    : timestamp.toDate()
+}
