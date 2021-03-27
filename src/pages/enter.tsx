@@ -2,12 +2,13 @@ import { Stack } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { SignInButtons } from '@components/SignInButtons'
 import { UsernameForm } from '@components/UsernameForm'
-import { UserContext } from '@lib/context'
+import { useAuth } from '@lib/auth'
+import { useRedirect } from '@lib/hooks'
 import { NextPage } from 'next'
-import { useContext } from 'react'
 
 const EnterPage: NextPage = () => {
-  const { user, username } = useContext(UserContext)
+  useRedirect()
+  const { user, username } = useAuth()
 
   return (
     <Layout variant='small'>
