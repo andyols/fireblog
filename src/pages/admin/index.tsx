@@ -1,4 +1,4 @@
-import { Heading } from '@chakra-ui/react'
+import { AdminPosts } from '@components/AdminPosts'
 import { Gatekeeper } from '@components/Gatekeeper'
 import { Layout } from '@components/Layout'
 import { PageHead } from '@components/PageHead'
@@ -9,7 +9,7 @@ const AdminPostsPage: NextPage = () => {
     <Layout>
       <PageHead pageTitle='My Posts' />
       <Gatekeeper>
-        <Heading>Admin Posts Page</Heading>
+        <AdminPosts />
       </Gatekeeper>
     </Layout>
   )

@@ -4,8 +4,11 @@ export type Post = {
   blazeCount: number
   content: string
   createdAt: number | Timestamp
+  updatedAt: number | Timestamp
+  published: boolean
   slug: string
   title: string
+  uid: string
   username: string
 }
 
