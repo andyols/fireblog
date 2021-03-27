@@ -6,10 +6,10 @@ import {
   Input,
   Stack
 } from '@chakra-ui/react'
-import { UserContext } from '@lib/context'
+import { useAuth } from '@lib/auth'
 import { firestore } from '@lib/firebase'
 import debounce from 'lodash.debounce'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 type FormEvent = React.FormEvent<HTMLInputElement>
 
@@ -18,7 +18,7 @@ export const UsernameForm: React.FC = () => {
   const [isValid, setIsValid] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const { user, username } = useContext(UserContext)
+  const { user } = useAuth()
 
   useEffect(() => {
     checkUsername(formValue)
@@ -77,7 +77,7 @@ export const UsernameForm: React.FC = () => {
     }
   }
 
-  return username ? null : (
+  return user?.username ? null : (
     <Stack w='full' spacing={4}>
       <FormControl as='form' onSubmit={onSubmit}>
         <FormLabel>Choose a Username</FormLabel>

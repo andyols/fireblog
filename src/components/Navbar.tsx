@@ -1,12 +1,12 @@
 import { Avatar, Button, Heading, HStack } from '@chakra-ui/react'
-import { UserContext } from '@lib/context'
+import { useAuth } from '@lib/auth'
 import { auth } from '@lib/firebase'
 import { useRouter } from 'next/dist/client/router'
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React from 'react'
 
 export const Navbar: React.FC = () => {
-  const { user, username } = useContext(UserContext)
+  const { user } = useAuth()
   const router = useRouter()
 
   return (
@@ -20,14 +20,14 @@ export const Navbar: React.FC = () => {
         </Heading>
       </Link>
       <HStack>
-        {!user && !router.pathname.includes('enter') && (
+        {!user && router.pathname !== '/enter' && (
           <Link href='/enter'>
             <Button colorScheme='whatsapp'>Login</Button>
           </Link>
         )}
         {user && (
           <>
-            {username && (
+            {user.username && (
               <Link href='/admin'>
                 <Button colorScheme='whatsapp'>Create a Post</Button>
               </Link>
@@ -37,8 +37,8 @@ export const Navbar: React.FC = () => {
                 Logout
               </Button>
             )}
-            {username && (
-              <Link href={`/${username}`}>
+            {user.username && (
+              <Link href={`/${user.username}`}>
                 <Avatar
                   _hover={{ cursor: 'pointer' }}
                   src={user.photoURL || ''}

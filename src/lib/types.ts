@@ -10,7 +10,8 @@ export type Post = {
 }
 
 export type User = {
-  displayName: string
-  photoURL: string
-  username: string
+  uid: string | undefined
+  displayName: string | null | undefined
+  photoURL: string | null | undefined
+  username: string | null | undefined
 }

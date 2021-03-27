@@ -1,17 +1,14 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { UserContext } from '@lib/context'
-import { useUserData } from '@lib/hooks'
+import { AuthProvider } from '@lib/auth'
 import theme from '@lib/theme'
 import { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const userData = useUserData()
-
   return (
     <ChakraProvider theme={theme}>
-      <UserContext.Provider value={userData}>
+      <AuthProvider>
         <Component {...pageProps} />
-      </UserContext.Provider>
+      </AuthProvider>
     </ChakraProvider>
   )
 }

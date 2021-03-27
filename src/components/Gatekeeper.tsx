@@ -20,10 +20,10 @@ export const Gatekeeper: React.FC<GatekeeperProps> = ({
   children,
   fallback
 }) => {
-  const { username } = useAuth()
+  const { user } = useAuth()
   const router = useRouter()
 
-  return username
+  return user?.username
     ? children
     : fallback || (
         <Box placeSelf='center'>

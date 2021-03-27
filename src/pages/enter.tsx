@@ -8,12 +8,12 @@ import { NextPage } from 'next'
 
 const EnterPage: NextPage = () => {
   useRedirect()
-  const { user, username } = useAuth()
+  const { user } = useAuth()
 
   return (
     <Layout variant='small'>
       <Stack align='center'>
-        {user && !username && <UsernameForm />}
+        {user && !user.username && <UsernameForm />}
         {!user && <SignInButtons />}
       </Stack>
     </Layout>
