@@ -1,5 +1,6 @@
 import { Stack } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
+import { PageHead } from '@components/PageHead'
 import { SignInButtons } from '@components/SignInButtons'
 import { UsernameForm } from '@components/UsernameForm'
 import { useAuth } from '@lib/auth'
@@ -12,6 +13,7 @@ const EnterPage: NextPage = () => {
 
   return (
     <Layout variant='small'>
+      <PageHead pageTitle='Sign In' />
       <Stack align='center'>
         {user && !user.username && <UsernameForm />}
         {!user && <SignInButtons />}

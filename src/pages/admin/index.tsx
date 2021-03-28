@@ -1,18 +1,17 @@
 import { AdminPosts } from '@components/AdminPosts'
-import { Gatekeeper } from '@components/Gatekeeper'
 import { Layout } from '@components/Layout'
 import { PageHead } from '@components/PageHead'
-import { NextPage } from 'next'
+import { Gatekeeper } from '@utils/Gatekeeper'
 
-const AdminPostsPage: NextPage = () => {
+const AdminPostsPage = () => {
   return (
     <Layout>
       <PageHead pageTitle='My Posts' />
-      <Gatekeeper>
-        <AdminPosts />
-      </Gatekeeper>
+      <AdminPosts />
     </Layout>
   )
 }
+
+export const getServerSideProps = Gatekeeper
 
 export default AdminPostsPage
