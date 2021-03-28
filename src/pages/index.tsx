@@ -4,14 +4,13 @@ import { PageHead } from '@components/PageHead'
 import { PostFeed } from '@components/PostFeed'
 import { convertTimestamp, firestore, postToJSON } from '@lib/firebase'
 import { Post } from '@lib/types'
-import { postInFeed } from '@utils/postInFeed'
 import { NextPage } from 'next'
 import { useState } from 'react'
 
 interface PageProps {
   posts: Post[]
 }
-const LIMIT = 1
+const LIMIT = 2
 
 const HomePage: NextPage<PageProps> = ({ posts }) => {
   const [feed, setFeed] = useState(posts)
@@ -19,6 +18,7 @@ const HomePage: NextPage<PageProps> = ({ posts }) => {
   const [postsEnd, setPostsEnd] = useState(false)
 
   const getMorePosts = async () => {
+    if (postsEnd) return
     setLoading(true)
 
     const last = posts[posts.length - 1]
@@ -36,21 +36,10 @@ const HomePage: NextPage<PageProps> = ({ posts }) => {
         doc.data()
       ) as Post[]
 
-      // check if posts returned from each query exist in the feed
-      let inFeed = false
-      newPosts.forEach((post) => {
-        if (postInFeed(post, feed)) {
-          inFeed = true
-        }
-      })
-
-      // only add new posts to local feed if they are not there yet
-      if (!inFeed) {
-        setFeed(feed.concat(newPosts))
-      } else {
+      if (newPosts.length < LIMIT) {
         setPostsEnd(true)
       }
-
+      setFeed(posts.concat(newPosts))
       setLoading(false)
     } catch (e) {
       console.error(e.message)

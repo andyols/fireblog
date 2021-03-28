@@ -54,10 +54,20 @@ export const NewPostForm: React.FC = () => {
       username: user?.username as string
     }
 
-    await ref.set(data)
+    try {
+      await ref.set(data)
+      toast({
+        status: 'success',
+        title: 'Post created! 📨',
+        isClosable: true,
+        position: 'bottom-left'
+      })
+      setTitle('')
+    } catch (e) {
+      console.error(e.message)
+    }
 
     setLoading(false)
-    setTitle('')
   }
 
   return (

@@ -26,21 +26,24 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
   const onOpen = () => setIsOpen(true)
   const onClose = () => setIsOpen(false)
 
-  const onDelete = async () => {
+  const deletePost = async () => {
     const ref = firestore
       .collection('users')
       .doc(auth.currentUser?.uid)
       .collection('posts')
       .doc(slug)
 
-    await ref.delete()
-    toast({
-      status: 'error',
-      title: 'Post annhilated! 💥',
-      isClosable: true,
-      position: 'bottom-left'
-    })
-    onClose()
+    try {
+      await ref.delete()
+      toast({
+        status: 'error',
+        title: 'Post annhilated! 💥',
+        isClosable: true,
+        position: 'bottom-left'
+      })
+    } catch (e) {
+      console.error(e.message)
+    }
   }
 
   return (
@@ -67,7 +70,14 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
               <Button ref={cancelRef} onClick={onClose}>
                 Never mind
               </Button>
-              <Button colorScheme='red' onClick={onDelete} ml={3}>
+              <Button
+                colorScheme='red'
+                onClick={() => {
+                  onClose()
+                  deletePost()
+                }}
+                ml={3}
+              >
                 Yep, do it! 💣
               </Button>
             </AlertDialogFooter>
