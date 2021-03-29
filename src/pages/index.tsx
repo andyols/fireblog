@@ -8,20 +8,19 @@ import { NextPage } from 'next'
 import { useState } from 'react'
 
 interface PageProps {
-  posts: Post[]
+  initialPosts: Post[]
 }
-const LIMIT = 2
+const LIMIT = 1
 
-const HomePage: NextPage<PageProps> = ({ posts }) => {
-  const [feed, setFeed] = useState(posts)
+const HomePage: NextPage<PageProps> = ({ initialPosts }) => {
+  const [feed, setFeed] = useState(initialPosts)
   const [loading, setLoading] = useState(false)
   const [postsEnd, setPostsEnd] = useState(false)
 
   const getMorePosts = async () => {
-    if (postsEnd) return
     setLoading(true)
 
-    const last = posts[posts.length - 1]
+    const last = feed[feed.length - 1]
     const cursor = convertTimestamp(last.createdAt)
 
     const query = firestore
@@ -39,19 +38,19 @@ const HomePage: NextPage<PageProps> = ({ posts }) => {
       if (newPosts.length < LIMIT) {
         setPostsEnd(true)
       }
-      setFeed(posts.concat(newPosts))
-      setLoading(false)
+
+      setFeed([...feed, ...newPosts])
     } catch (e) {
       console.error(e.message)
-      setLoading(false)
     }
+    setLoading(false)
   }
 
   return (
     <Layout>
       <PageHead pageTitle='Home' />
       <Heading>Latest Posts</Heading>
-      {posts && <PostFeed posts={feed} />}
+      {initialPosts && <PostFeed posts={feed} />}
       <Button
         isLoading={loading}
         isDisabled={postsEnd}
@@ -72,15 +71,15 @@ export const getServerSideProps = async () => {
     .orderBy('createdAt', 'desc')
     .limit(LIMIT)
 
-  let posts = null
+  let initialPosts = null
   try {
-    posts = (await postsQuery.get()).docs.map(postToJSON)
+    initialPosts = (await postsQuery.get()).docs.map(postToJSON)
   } catch (e) {
     console.error(e.message)
   }
 
   return {
-    props: { posts }
+    props: { initialPosts }
   }
 }
 
