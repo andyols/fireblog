@@ -17,7 +17,6 @@ import React, { useState } from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { useForm } from 'react-hook-form'
-import { FiCamera, FiEye } from 'react-icons/fi'
 import { Loader } from './Loader'
 import { Markdown } from './Markdown'
 
@@ -71,7 +70,7 @@ const PostForm: React.FC<PostFormProps> = ({
   }
 
   return (
-    <Stack w='full' pb={12}>
+    <Stack w='full' as='section'>
       {preview && <Markdown markdown={watch('content')} />}
       <FormControl
         as='form'
@@ -121,22 +120,18 @@ export const PostEditor: React.FC = () => {
 
   return !post ? null : (
     <>
-      <Heading fontSize='3xl'>Editing {post.title}</Heading>
-      <HStack justify='space-between' align='start' spacing={12} pt={2}>
+      <Heading fontSize='2xl'>{post.title}</Heading>
+      <HStack align='start' justify='start' pt={2} w='full'>
         <PostForm defaultValues={post} postRef={postRef} preview={preview} />
-        <Stack position='sticky' top={8}>
+        <Stack position='sticky' top={8} as='aside'>
           <Button
             onClick={() => setPreview(!preview)}
-            justifyContent='start'
             colorScheme={preview ? 'messenger' : 'gray'}
-            leftIcon={<FiEye />}
           >
             Preview
           </Button>
           <Link href={`/${post.username}/${post.slug}`}>
-            <Button justifyContent='start' leftIcon={<FiCamera />}>
-              Live View
-            </Button>
+            <Button>Live View</Button>
           </Link>
         </Stack>
       </HStack>

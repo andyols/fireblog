@@ -23,7 +23,7 @@ interface PostItemProps {
 
 export const PostFeed: React.FC<PostFeedProps> = ({ admin, posts }) => {
   return (
-    <Stack w='full'>
+    <Stack py={4} w='full' as='section'>
       {posts.map((post) => (
         <PostItem post={post} key={post.slug} admin={admin || false} />
       ))}
@@ -42,6 +42,7 @@ const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
       p={4}
       borderRadius='base'
       shadow='xs'
+      as='article'
     >
       <Stack spacing={0}>
         <Link href={`/${post.username}/${post.slug}`}>
@@ -69,7 +70,7 @@ const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
       <Stack h='full' justify='space-between' align='flex-end'>
         <HStack spacing={0}>
           <Text mr={-2} color='gray.800' fontSize='sm' fontWeight='semibold'>
-            {post.blazeCount} blaze{post.blazeCount !== 1 && 's'}
+            {post.blazeCount} Blaze{post.blazeCount !== 1 && 's'}
           </Text>
           <Button
             variant='link'

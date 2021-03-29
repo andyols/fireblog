@@ -12,12 +12,13 @@ export const Wrapper: React.FC<WrapperProps> = ({
   variant = 'regular'
 }) => {
   return (
-    <Flex flex='auto' overflow='auto' justify='center' as='main'>
+    <Flex flex='auto' justify='center'>
       <Stack
         mt={8}
         px={4}
         maxW={variant === 'regular' ? '800px' : '400px'}
         w='full'
+        as='main'
       >
         {children}
       </Stack>

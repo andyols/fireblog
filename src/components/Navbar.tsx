@@ -10,7 +10,13 @@ export const Navbar: React.FC = () => {
   const router = useRouter()
 
   return (
-    <HStack justify='space-between' p={4} bg='messenger.500' shadow='xs'>
+    <HStack
+      justify='space-between'
+      p={4}
+      bg='messenger.500'
+      shadow='xs'
+      as='nav'
+    >
       <Link href='/'>
         <Heading
           as='a'
@@ -29,7 +35,7 @@ export const Navbar: React.FC = () => {
           <>
             {user.username && (
               <Link href='/admin'>
-                <Button colorScheme='whatsapp'>Create a Post</Button>
+                <Button colorScheme='whatsapp'>My Posts</Button>
               </Link>
             )}
             {user && (

@@ -1,4 +1,4 @@
-import { Box, Code } from '@chakra-ui/react'
+import { Box, Code, Flex } from '@chakra-ui/react'
 import ChakraUIRenderer, { defaults } from 'chakra-ui-markdown-renderer'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -21,7 +21,7 @@ const markdownTheme = {
             py={4}
             pl={6}
             pr={16}
-            className={className || null}
+            className={className || undefined}
             borderRadius='md'
             shadow='inner'
           >
@@ -39,11 +39,20 @@ interface MarkdownProps {
 
 export const Markdown: React.FC<MarkdownProps> = ({ markdown }) => {
   return (
-    <Box py={2} px={4} bg='white' shadow='base' borderRadius='base'>
+    <Flex
+      flexDir='column'
+      py={2}
+      px={4}
+      bg='white'
+      shadow='base'
+      maxW='100%'
+      borderRadius='base'
+      as='article'
+    >
       <ReactMarkdown
         children={markdown}
         renderers={ChakraUIRenderer(markdownTheme)}
       />
-    </Box>
+    </Flex>
   )
 }

@@ -1,12 +1,9 @@
-import {
-  DocumentData,
-  DocumentSnapshot,
-  Timestamp
-} from '@firebase/firestore-types'
+import { DocumentSnapshot, Timestamp } from '@firebase/firestore-types'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
+import { Post } from './types'
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -56,7 +53,7 @@ export const postToJSON = (doc: DocumentSnapshot) => {
   if (!data) return null
 
   return {
-    ...(data as DocumentData),
+    ...(data as Post),
     createdAt: data.createdAt.toMillis() as string,
     updatedAt: data.createdAt.toMillis() as string
   }

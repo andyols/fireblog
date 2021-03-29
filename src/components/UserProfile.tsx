@@ -8,7 +8,7 @@ interface UserProfileProps {
 
 export const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   return (
-    <Stack align='center'>
+    <Stack align='center' as='section'>
       <Avatar size='2xl' src={user.photoURL || ''} shadow='md' />
       <Stack spacing={4} textAlign='center'>
         <Text fontSize='lg' fontStyle='italic' color='messenger.500'>

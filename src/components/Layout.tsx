@@ -9,7 +9,7 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ variant, children }) => {
   return (
-    <Flex flexDir='column' h='100vh' bg='gray.50'>
+    <Flex flexDir='column' minH='100vh' bg='gray.50' pb={16}>
       <Navbar />
       <Wrapper variant={variant}>{children}</Wrapper>
     </Flex>
