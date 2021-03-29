@@ -1,4 +1,4 @@
-import { Button, Divider, Heading } from '@chakra-ui/react'
+import { Button, Heading } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { PageHead } from '@components/PageHead'
 import { PostFeed } from '@components/PostFeed'
@@ -51,7 +51,6 @@ const HomePage: NextPage<PageProps> = ({ posts }) => {
     <Layout>
       <PageHead pageTitle='Home' />
       <Heading>Latest Posts</Heading>
-      <Divider />
       {posts && <PostFeed posts={feed} />}
       <Button
         isLoading={loading}

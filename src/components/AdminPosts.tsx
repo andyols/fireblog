@@ -1,4 +1,4 @@
-import { Divider, Heading } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import { auth, firestore } from '@lib/firebase'
 import { Post } from '@lib/types'
 import React from 'react'
@@ -22,7 +22,6 @@ export const AdminPosts: React.FC<AdminPostsProps> = ({}) => {
   return (
     <>
       <Heading>My Posts</Heading>
-      <Divider />
       {loading ? <Loader /> : <PostFeed posts={posts} admin />}
       <NewPostForm />
     </>

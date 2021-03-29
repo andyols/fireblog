@@ -4,6 +4,7 @@ dependencies:
   '@chakra-ui/theme-tools': 1.1.1_react@17.0.2
   '@emotion/react': 11.1.5_@types+react@17.0.3+react@17.0.2
   '@emotion/styled': 11.1.5_a74314bbc21a27607eb4b82774331d24
+  chakra-ui-markdown-renderer: 1.1.0_9a358888fd0f88a6d2bc8fb30f3e955a
   firebase: 8.3.1
   firebase-admin: 9.5.0
   framer-motion: 4.0.3_react-dom@17.0.2+react@17.0.2
@@ -14,6 +15,7 @@ dependencies:
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-firebase-hooks: 3.0.3_firebase@8.3.1+react@17.0.2
+  react-hook-form: 6.15.5_react@17.0.2
   react-icons: 4.2.0_react@17.0.2
   react-markdown: 5.0.3_@types+react@17.0.3+react@17.0.2
 devDependencies:
@@ -1883,6 +1885,26 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JUdjWpcxfJ9IPamy2f5JaRDCaqJOxDzOSKtbdx4rH9VivMd1vIzoPumsJa9LoMIi4Fx2BV2KZOxWhNkBjaYivQ==
+  /chakra-ui-markdown-renderer/1.1.0_9a358888fd0f88a6d2bc8fb30f3e955a:
+    dependencies:
+      '@chakra-ui/react': 1.4.1_7faa459b28df2bada2b53b28b83d21e1
+      '@emotion/react': 11.1.5_@types+react@17.0.3+react@17.0.2
+      '@emotion/styled': 11.1.5_a74314bbc21a27607eb4b82774331d24
+      framer-motion: 4.0.3_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+    peerDependencies:
+      '@chakra-ui/react': ^1.0.3
+      '@emotion/core': ^10.0.27
+      '@emotion/react': ^11.1.2
+      '@emotion/styled': ^11.0.0
+      emotion-theming: ^10.0.27
+      framer-motion: ^2.9.5
+      react: '>= 16.8'
+      react-dom: '>= 16.8'
+    resolution:
+      integrity: sha512-0iyxulaa6Y9lvAZdL2+8st51osD+UMuBcDWi3OHY7fS4uKE6TVp+9c6E2suV0nZeSGznkuza7bREeP0/6Fx8lA==
   /chalk/2.4.2:
     dependencies:
       ansi-styles: 3.2.1
@@ -3711,6 +3733,14 @@ packages:
       react: ^16.8.0 || ^17.0.0
     resolution:
       integrity: sha512-XLxj6uTXgz0US8TmqNU2jMfnXwZG0mH2r/afQqvPEaX6nyEll5LHVcEXk2XDUQ34RVeLPkO/xK5x6c/qiuSq/A==
+  /react-hook-form/6.15.5_react@17.0.2:
+    dependencies:
+      react: 17.0.2
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17
+    resolution:
+      integrity: sha512-so2jEPYKdVk1olMo+HQ9D9n1hVzaPPFO4wsjgSeZ964R7q7CHsYRbVF0PGBi83FcycA5482WHflasdwLIUVENg==
   /react-icons/4.2.0_react@17.0.2:
     dependencies:
       react: 17.0.2
@@ -4492,6 +4522,7 @@ specifiers:
   '@types/node': ^14.14.35
   '@types/react': ^17.0.3
   '@types/react-dom': ^17.0.3
+  chakra-ui-markdown-renderer: ^1.1.0
   firebase: ^8.3.1
   firebase-admin: ^9.5.0
   framer-motion: ^4.0.3
@@ -4502,6 +4533,7 @@ specifiers:
   react: ^17.0.2
   react-dom: ^17.0.2
   react-firebase-hooks: ^3.0.3
+  react-hook-form: ^6.15.5
   react-icons: ^4.2.0
   react-markdown: ^5.0.3
   typescript: ^4.2.3

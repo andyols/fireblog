@@ -1,5 +1,4 @@
 import {
-  Divider,
   Heading,
   Link as ChakraLink,
   Link,
@@ -10,6 +9,7 @@ import { timestampToDate } from '@lib/firebase'
 import { Post } from '@lib/types'
 import React from 'react'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
+import { Markdown } from './Markdown'
 
 interface PostContentProps {
   post: Post | Data
@@ -17,7 +17,7 @@ interface PostContentProps {
 
 export const PostContent: React.FC<PostContentProps> = ({ post }) => {
   return (
-    <>
+    <Stack pb={8}>
       <Stack spacing={1}>
         <Heading fontSize='3xl'>{post.title}</Heading>
         <Text color='gray.500'>
@@ -30,8 +30,7 @@ export const PostContent: React.FC<PostContentProps> = ({ post }) => {
           on {timestampToDate(post.createdAt).toDateString()}
         </Text>
       </Stack>
-      <Divider />
-      <Text>{post.content}</Text>
-    </>
+      <Markdown markdown={post.content} />
+    </Stack>
   )
 }
