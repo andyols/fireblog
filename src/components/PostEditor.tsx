@@ -5,6 +5,7 @@ import {
   Heading,
   HStack,
   Stack,
+  Text,
   Textarea,
   useToast
 } from '@chakra-ui/react'
@@ -31,12 +32,14 @@ const PostForm: React.FC<PostFormProps> = ({
   postRef,
   preview
 }) => {
-  const { register, handleSubmit, reset, watch } = useForm({
-    defaultValues,
-    mode: 'onBlur'
-  })
   const toast = useToast()
   const [loading, setLoading] = useState(false)
+
+  const { register, handleSubmit, reset, watch, formState, errors } = useForm({
+    defaultValues,
+    mode: 'onChange'
+  })
+  const { isDirty, isValid } = formState
 
   const updatePost = async ({ content, published }: Partial<Post>) => {
     setLoading(true)
@@ -80,11 +83,21 @@ const PostForm: React.FC<PostFormProps> = ({
         <Stack>
           <Textarea
             name='content'
-            ref={register}
+            ref={register({
+              maxLength: { value: 20000, message: 'Content is too long!' },
+              minLength: { value: 10, message: 'Content is too short!' },
+              required: 'Content is required!'
+            })}
             bg='white'
             h={64}
             spellCheck={false}
+            isInvalid={!!errors['content']}
           />
+          {errors['content']?.message && (
+            <Text fontSize='sm' fontWeight='semibold' color='red.500'>
+              {errors['content'].message}
+            </Text>
+          )}
           <Checkbox name='published' ref={register} pb={2}>
             Publish?
           </Checkbox>
@@ -92,6 +105,7 @@ const PostForm: React.FC<PostFormProps> = ({
             type='submit'
             colorScheme='whatsapp'
             isLoading={loading}
+            isDisabled={!isValid || !isDirty}
             placeSelf='start'
           >
             Save Changes
