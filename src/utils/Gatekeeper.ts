@@ -11,20 +11,22 @@ export type GuardedProps = InferGetServerSidePropsType<typeof Gatekeeper>
  * @returns props object only if the token passed verification
  */
 export const Gatekeeper = async (ctx: GetServerSidePropsContext) => {
+  // attempt to verify cookie token
   try {
     const cookies = nookies.get(ctx)
-    const token = await adminAuth.verifyIdToken(cookies.token)
+    await adminAuth.verifyIdToken(cookies.token)
 
-    return (
-      token && {
-        props: {}
-      }
-    )
+    // token is good, good to fetch data and do auth stuff
+
+    return { props: {} }
   } catch (e) {
     // token error so redirect to enter page
-    ctx.res.writeHead(302, { location: `/enter?redirect=${ctx.resolvedUrl}` })
-    ctx.res.end()
-
-    return { props: {} as never }
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/enter?redirect=${ctx.resolvedUrl}`
+      },
+      props: {} as never
+    }
   }
 }
