@@ -4,11 +4,10 @@ import { PageHead } from '@components/PageHead'
 import { SignInButtons } from '@components/SignInButtons'
 import { UsernameForm } from '@components/UsernameForm'
 import { useAuth } from '@lib/auth'
-import { useRedirect } from '@lib/hooks'
 import { NextPage } from 'next'
 
 const EnterPage: NextPage = () => {
-  useRedirect()
+  // useRedirect()
   const { user } = useAuth()
 
   return (

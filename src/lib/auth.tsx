@@ -1,5 +1,4 @@
 import { User as FirebaseUser } from '@firebase/auth-types'
-import Router from 'next/router'
 import nookies from 'nookies'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth, firestore } from './firebase'
@@ -38,9 +37,9 @@ export const useManageUser = (): IAuthUser => {
         setFirebaseUser(null)
         nookies.set(undefined, 'token', '', { path: '/' })
         // redirect off of any admin pages when not authenticated
-        if (Router.pathname.includes('admin')) {
-          Router.replace('/')
-        }
+        // if (Router.pathname.includes('admin')) {
+        //   Router.replace('/')
+        // }
       } else {
         setFirebaseUser(user)
         try {
