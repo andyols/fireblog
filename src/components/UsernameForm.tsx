@@ -65,7 +65,7 @@ export const UsernameForm: React.FC = () => {
       batch.set(userDoc, {
         username: formValue,
         photoURL: user.photoURL,
-        displayName: user.displayName
+        displayName: user.displayName || 'Anonymous User'
       })
       batch.set(usernameDoc, { uid: user.uid })
 
@@ -83,6 +83,7 @@ export const UsernameForm: React.FC = () => {
         <FormLabel>Choose a Username</FormLabel>
         <Input
           name='username'
+          bg='white'
           placeholder='username'
           value={formValue}
           onChange={onChange}

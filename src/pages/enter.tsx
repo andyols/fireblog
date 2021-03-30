@@ -1,4 +1,4 @@
-import { Stack } from '@chakra-ui/react'
+import { Heading, Stack } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { PageHead } from '@components/PageHead'
 import { SignInButtons } from '@components/SignInButtons'
@@ -14,10 +14,23 @@ const EnterPage: NextPage = () => {
   return (
     <Layout variant='small'>
       <PageHead pageTitle='Sign In' />
-      <Stack align='center'>
-        {user && !user.username && <UsernameForm />}
-        {!user && <SignInButtons />}
-      </Stack>
+      {user && !user.username && <UsernameForm />}
+      {!user && (
+        <>
+          <Heading placeSelf='center' fontSize='3xl'>
+            👋 Welcome to Fireblog!
+          </Heading>
+          <Stack
+            align='center'
+            bg='white'
+            p={4}
+            borderRadius='base'
+            shadow='base'
+          >
+            <SignInButtons />
+          </Stack>
+        </>
+      )}
     </Layout>
   )
 }

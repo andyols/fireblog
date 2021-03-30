@@ -47,7 +47,7 @@ export const Navbar: React.FC = () => {
               <Link href={`/${user.username}`}>
                 <Avatar
                   _hover={{ cursor: 'pointer' }}
-                  src={user.photoURL || ''}
+                  src={user.photoURL as string}
                 />
               </Link>
             )}

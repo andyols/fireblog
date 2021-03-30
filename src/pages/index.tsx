@@ -10,7 +10,7 @@ import { useState } from 'react'
 interface PageProps {
   initialPosts: Post[]
 }
-const LIMIT = 1
+const LIMIT = 3
 
 const HomePage: NextPage<PageProps> = ({ initialPosts }) => {
   const [feed, setFeed] = useState(initialPosts)
