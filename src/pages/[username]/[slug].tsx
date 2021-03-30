@@ -1,3 +1,6 @@
+import { HStack } from '@chakra-ui/react'
+import { AuthCheck } from '@components/AuthCheck'
+import { BlazeButton } from '@components/BlazeButton'
 import { Layout } from '@components/Layout'
 import { PageHead } from '@components/PageHead'
 import { PostContent } from '@components/PostContent'
@@ -19,7 +22,12 @@ const PostPage: NextPage<PageProps> = ({ post, path }) => {
   return (
     <Layout>
       <PageHead pageTitle={`${realPost.slug}`} />
-      <PostContent post={realPost} />
+      <HStack align='start' justify='start' w='full' spacing={4}>
+        <PostContent post={realPost} />
+        <AuthCheck fallback={<BlazeButton postRef={null} />}>
+          <BlazeButton postRef={postRef} />
+        </AuthCheck>
+      </HStack>
     </Layout>
   )
 }

@@ -19,19 +19,24 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config)
 }
 
+// auth
 export const auth = firebase.auth()
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 googleAuthProvider.setCustomParameters({
   prompt: 'select_account'
 })
 export const githubAuthProvider = new firebase.auth.GithubAuthProvider()
+
+// firestore
 export const firestore = firebase.firestore()
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp
+export const incremnet = firebase.firestore.FieldValue.increment
+
+// storage
 export const storage = firebase.storage()
 export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED
 
 // Helper Functions
-
 /**
  * Gets a users/{uid} document with username
  * @param username

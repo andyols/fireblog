@@ -17,7 +17,7 @@ interface PostContentProps {
 
 export const PostContent: React.FC<PostContentProps> = ({ post }) => {
   return (
-    <Stack pb={8} as='section'>
+    <Stack pb={8} as='section' w='full'>
       <Stack spacing={1} as='header'>
         <Heading fontSize='3xl'>{post.title}</Heading>
         <Text color='gray.500'>
