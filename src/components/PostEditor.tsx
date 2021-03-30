@@ -1,11 +1,10 @@
 import {
   Button,
-  Checkbox,
   FormControl,
+  FormErrorMessage,
   Heading,
   HStack,
   Stack,
-  Text,
   Textarea,
   useToast
 } from '@chakra-ui/react'
@@ -18,6 +17,7 @@ import React, { useState } from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { useForm } from 'react-hook-form'
+import { ImageUploader } from './ImageUploader'
 import { Loader } from './Loader'
 import { Markdown } from './Markdown'
 
@@ -41,16 +41,15 @@ const PostForm: React.FC<PostFormProps> = ({
   })
   const { isDirty, isValid } = formState
 
-  const updatePost = async ({ content, published }: Partial<Post>) => {
+  const updatePost = async ({ content }: Partial<Post>) => {
     setLoading(true)
     try {
       await postRef.update({
         content,
-        published,
         updatedAt: serverTimestamp()
       })
 
-      reset({ content, published })
+      reset({ content })
 
       toast({
         status: 'success',
@@ -79,6 +78,7 @@ const PostForm: React.FC<PostFormProps> = ({
         as='form'
         onSubmit={handleSubmit(updatePost)}
         hidden={preview}
+        isInvalid={!!errors['content']}
       >
         <Stack>
           <Textarea
@@ -91,25 +91,20 @@ const PostForm: React.FC<PostFormProps> = ({
             bg='white'
             h={64}
             spellCheck={false}
-            isInvalid={!!errors['content']}
           />
-          {errors['content']?.message && (
-            <Text fontSize='sm' fontWeight='semibold' color='red.500'>
-              {errors['content'].message}
-            </Text>
-          )}
-          <Checkbox name='published' ref={register} pb={2}>
-            Publish?
-          </Checkbox>
-          <Button
-            type='submit'
-            colorScheme='whatsapp'
-            isLoading={loading}
-            isDisabled={!isValid || !isDirty}
-            placeSelf='start'
-          >
-            Save Changes
-          </Button>
+          <FormErrorMessage>{errors['content']?.message}</FormErrorMessage>
+          <Stack align='start'>
+            <ImageUploader />
+            <Button
+              type='submit'
+              colorScheme='whatsapp'
+              isLoading={loading}
+              isDisabled={!isValid || !isDirty}
+              placeSelf='start'
+            >
+              Save Changes
+            </Button>
+          </Stack>
         </Stack>
       </FormControl>
     </Stack>
@@ -142,10 +137,10 @@ export const PostEditor: React.FC = () => {
             onClick={() => setPreview(!preview)}
             colorScheme={preview ? 'messenger' : 'gray'}
           >
-            Preview
+            👀 Preview
           </Button>
           <Link href={`/${post.username}/${post.slug}`}>
-            <Button>Live View</Button>
+            <Button>🎥 Live View</Button>
           </Link>
         </Stack>
       </HStack>
