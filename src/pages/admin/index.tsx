@@ -1,7 +1,7 @@
 import { AdminPosts } from '@components/AdminPosts'
 import { Layout } from '@components/Layout'
 import { PageHead } from '@components/PageHead'
-import { Gatekeeper } from '@utils/Gatekeeper'
+import { getServerSideAuthProps } from '@utils/getServerSideAuthProps'
 
 const AdminPostsPage = () => {
   return (
@@ -12,6 +12,6 @@ const AdminPostsPage = () => {
   )
 }
 
-export const getServerSideProps = Gatekeeper
+export const getServerSideProps = getServerSideAuthProps
 
 export default AdminPostsPage

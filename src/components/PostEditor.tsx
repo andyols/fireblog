@@ -62,7 +62,7 @@ const PostForm: React.FC<PostFormProps> = ({
       toast({
         status: 'error',
         title: 'Server error.',
-        description: 'Check internet connection and try again.',
+        description: e.message,
         isClosable: true,
         position: 'bottom-left'
       })

@@ -42,6 +42,7 @@ export const Markdown: React.FC<MarkdownProps> = ({ markdown }) => {
     <Flex
       flexDir='column'
       p={4}
+      pr={12}
       bg='white'
       shadow='base'
       maxW='100%'

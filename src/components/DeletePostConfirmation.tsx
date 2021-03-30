@@ -36,13 +36,20 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
     try {
       await ref.delete()
       toast({
-        status: 'error',
+        status: 'success',
         title: 'Post annhilated! 💥',
         isClosable: true,
         position: 'bottom-left'
       })
     } catch (e) {
       console.error(e.message)
+      toast({
+        status: 'error',
+        title: 'Server Error',
+        description: e.message,
+        isClosable: true,
+        position: 'bottom-left'
+      })
     }
   }
 
