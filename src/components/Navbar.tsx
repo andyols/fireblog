@@ -1,6 +1,7 @@
 import { Avatar, Button, Heading, HStack } from '@chakra-ui/react'
 import { useAuth } from '@lib/auth'
 import { auth } from '@lib/firebase'
+import { isUserAnonymous } from '@utils/isUserAnonymous'
 import { useRouter } from 'next/dist/client/router'
 import Link from 'next/link'
 import React from 'react'
@@ -8,6 +9,10 @@ import React from 'react'
 export const Navbar: React.FC = () => {
   const { user } = useAuth()
   const router = useRouter()
+
+  const handleSignOut = () => {
+    return isUserAnonymous() ? auth.currentUser?.delete() : auth.signOut()
+  }
 
   return (
     <HStack
@@ -39,7 +44,7 @@ export const Navbar: React.FC = () => {
               </Link>
             )}
             {user && (
-              <Button colorScheme='messenger' onClick={() => auth.signOut()}>
+              <Button colorScheme='messenger' onClick={handleSignOut}>
                 Logout
               </Button>
             )}

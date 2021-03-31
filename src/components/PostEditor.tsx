@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   Heading,
@@ -13,10 +14,11 @@ import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
 import { errorToast } from '@utils/errorToast'
+import { isUserAnonymous } from '@utils/isUserAnonymous'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { useForm } from 'react-hook-form'
 import { ImageUploader } from './ImageUploader'
@@ -43,11 +45,12 @@ const PostForm: React.FC<PostFormProps> = ({
   })
   const { isDirty, isValid } = formState
 
-  const updatePost = async ({ content }: Partial<Post>) => {
+  const updatePost = async ({ content, published }: Partial<Post>) => {
     setLoading(true)
     try {
       await postRef.update({
         content,
+        published,
         updatedAt: serverTimestamp()
       })
 
@@ -55,8 +58,9 @@ const PostForm: React.FC<PostFormProps> = ({
 
       toast({
         ...TOAST_SUCCESS,
-        title: 'Post updated! 👍'
+        title: `Post updated! 👍`
       })
+
       setLoading(false)
     } catch (e) {
       console.error(e.message)
@@ -75,6 +79,7 @@ const PostForm: React.FC<PostFormProps> = ({
         isInvalid={!!errors['content']}
       >
         <Stack>
+          <ImageUploader />
           <Textarea
             name='content'
             ref={register({
@@ -87,8 +92,12 @@ const PostForm: React.FC<PostFormProps> = ({
             spellCheck={false}
           />
           <FormErrorMessage>{errors['content']?.message}</FormErrorMessage>
-          <Stack align='start'>
-            <ImageUploader />
+          <Stack align='start' spacing={4}>
+            {!isUserAnonymous() && (
+              <Checkbox colorScheme='whatsapp' name='published' ref={register}>
+                Publish?
+              </Checkbox>
+            )}
             <Button
               type='submit'
               colorScheme='whatsapp'
@@ -117,14 +126,14 @@ export const PostEditor: React.FC = () => {
     .collection('posts')
     .doc(slug)
 
-  const [post, loading] = useDocumentDataOnce(postRef)
+  const [post, loading] = useDocumentData(postRef)
 
   if (loading) return <Loader />
 
   return !post ? null : (
     <>
       <Heading fontSize='2xl'>{post.title}</Heading>
-      <HStack align='start' justify='start' pt={2} w='full'>
+      <HStack align='end' justify='start' pt={2} w='full'>
         <PostForm defaultValues={post} postRef={postRef} preview={preview} />
         <Stack position='sticky' top={8} as='aside'>
           <Button
@@ -133,9 +142,11 @@ export const PostEditor: React.FC = () => {
           >
             👀 Preview
           </Button>
-          <Link href={`/${post.username}/${post.slug}`}>
-            <Button>🎥 Live View</Button>
-          </Link>
+          {post.published && (
+            <Link href={`/${post.username}/${post.slug}`}>
+              <Button>🎥 Live View</Button>
+            </Link>
+          )}
         </Stack>
       </HStack>
     </>
