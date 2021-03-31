@@ -8,7 +8,6 @@ import {
   Text
 } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
-import { PageHead } from '@components/PageHead'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { FaGhost } from 'react-icons/fa'
@@ -21,8 +20,7 @@ const spooky = keyframes`
 
 const Custom404: NextPage = () => {
   return (
-    <Layout>
-      <PageHead pageTitle='Whoopsie!' />
+    <Layout title='Error 404'>
       <Stack textAlign='center' align='center'>
         <Heading
           color='gray.700'

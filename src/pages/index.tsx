@@ -1,6 +1,5 @@
 import { Button, Heading } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
-import { PageHead } from '@components/PageHead'
 import { PostFeed } from '@components/PostFeed'
 import { convertTimestamp, firestore, postToJSON } from '@lib/firebase'
 import { Post } from '@lib/types'
@@ -48,7 +47,6 @@ const HomePage: NextPage<PageProps> = ({ initialPosts }) => {
 
   return (
     <Layout>
-      <PageHead pageTitle='Home' />
       <Heading>Latest Posts</Heading>
       {initialPosts && <PostFeed posts={feed} />}
       <Button

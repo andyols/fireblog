@@ -1,6 +1,5 @@
 import { Stack } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
-import { PageHead } from '@components/PageHead'
 import { PostFeed } from '@components/PostFeed'
 import { UserProfile } from '@components/UserProfile'
 import { getUserWithUsername, postToJSON } from '@lib/firebase'
@@ -15,8 +14,7 @@ interface PageProps {
 
 const UserProfilePage: NextPage<PageProps> = ({ user, posts }) => {
   return (
-    <Layout>
-      <PageHead pageTitle='My Profile' />
+    <Layout title={`${user.username} (${user.displayName})`}>
       <Stack align='center'>
         {user && <UserProfile user={user} />}
         {posts && <PostFeed posts={posts} />}

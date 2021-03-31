@@ -2,9 +2,13 @@ import { HStack } from '@chakra-ui/react'
 import { AuthCheck } from '@components/AuthCheck'
 import { BlazeButton } from '@components/BlazeButton'
 import { Layout } from '@components/Layout'
-import { PageHead } from '@components/PageHead'
 import { PostContent } from '@components/PostContent'
-import { firestore, getUserWithUsername, postToJSON } from '@lib/firebase'
+import {
+  firestore,
+  getUserWithUsername,
+  postToJSON,
+  timestampToDate
+} from '@lib/firebase'
 import { Post } from '@lib/types'
 import { GetStaticPropsContext, NextPage } from 'next'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
@@ -20,8 +24,10 @@ const PostPage: NextPage<PageProps> = ({ post, path }) => {
   const realPost = realtimePost || post
 
   return (
-    <Layout>
-      <PageHead pageTitle={`${realPost.slug}`} />
+    <Layout
+      title={`${realPost.title}`}
+      date={`${timestampToDate(realPost.createdAt).toISOString()}`}
+    >
       <HStack align='start' justify='start' w='full' spacing={4}>
         <PostContent post={realPost} />
         <AuthCheck fallback={<BlazeButton postRef={null} />}>
