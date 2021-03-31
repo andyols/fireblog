@@ -1,6 +1,7 @@
 import { Button, FormControl, Input, useToast } from '@chakra-ui/react'
 import { Timestamp } from '@firebase/firestore-types'
 import { useAuth } from '@lib/auth'
+import { TOAST_INFO, TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
 import kebabcase from 'lodash.kebabcase'
@@ -33,10 +34,9 @@ export const NewPostForm: React.FC = () => {
 
     if (exists) {
       toast({
+        ...TOAST_INFO,
         title: 'Oops!',
-        description: 'You already have a post with that title.',
-        isClosable: true,
-        position: 'bottom-left'
+        description: 'You already have a post with that title.'
       })
       setLoading(false)
       return
@@ -56,12 +56,7 @@ export const NewPostForm: React.FC = () => {
 
     try {
       await ref.set(data)
-      toast({
-        status: 'success',
-        title: 'Post created! 📨',
-        isClosable: true,
-        position: 'bottom-left'
-      })
+      toast({ ...TOAST_SUCCESS, title: 'Post created! 📃' })
       setTitle('')
     } catch (e) {
       console.error(e.message)

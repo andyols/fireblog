@@ -9,8 +9,10 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { DocumentData, DocumentReference } from '@firebase/firestore-types'
+import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -52,21 +54,13 @@ const PostForm: React.FC<PostFormProps> = ({
       reset({ content })
 
       toast({
-        status: 'success',
-        title: 'Post updated! 👍',
-        isClosable: true,
-        position: 'bottom-left'
+        ...TOAST_SUCCESS,
+        title: 'Post updated! 👍'
       })
       setLoading(false)
     } catch (e) {
-      toast({
-        status: 'error',
-        title: 'Server error.',
-        description: e.message,
-        isClosable: true,
-        position: 'bottom-left'
-      })
       console.error(e.message)
+      firebaseErrorToast(e.message)
       setLoading(false)
     }
   }

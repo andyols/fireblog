@@ -5,6 +5,7 @@ import {
   Input,
   useToast
 } from '@chakra-ui/react'
+import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, STATE_CHANGED, storage } from '@lib/firebase'
 import { writeToClipboard } from '@utils/writeToClipboard'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
@@ -56,11 +57,9 @@ export const ImageUploader: React.FC = () => {
     if (downloadURL.length && !imgMarkdown.length) {
       setImgMarkdown(`![alt](${downloadURL})`)
       toast({
-        status: 'success',
-        isClosable: true,
-        position: 'bottom-left',
+        ...TOAST_SUCCESS,
         title: 'Image uploaded!',
-        description: 'Click generated markdown to copy to clipboard. 📄'
+        description: 'Click the generated markdown to copy to clipboard. '
       })
     }
   }, [downloadURL, imgMarkdown])
@@ -86,11 +85,8 @@ export const ImageUploader: React.FC = () => {
           onClick={() => {
             writeToClipboard(imgMarkdown)
             toast({
-              status: 'success',
-              position: 'bottom-left',
-              title: 'Markdown copied! 📄',
-              isClosable: true,
-              duration: 2000
+              ...TOAST_SUCCESS,
+              title: 'Markdown copied! 📄'
             })
             setDownloadURL('')
             setImgMarkdown('')

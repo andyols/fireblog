@@ -51,7 +51,7 @@ export const Layout: React.FC<LayoutProps> = ({
         <meta property='og:description' content={meta.description} />
         <meta property='og:image' content={meta.image} />
 
-        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content='@andyols_dev' />
         <meta name='twitter:title' content={meta.title} />
         <meta name='twitter:description' content={meta.description} />

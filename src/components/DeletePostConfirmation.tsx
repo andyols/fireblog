@@ -8,7 +8,9 @@ import {
   Button,
   useToast
 } from '@chakra-ui/react'
+import { TOAST_ERROR } from '@lib/constants'
 import { auth, firestore } from '@lib/firebase'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
 import React, { RefObject, useRef, useState } from 'react'
 import { FiTrash } from 'react-icons/fi'
 
@@ -35,21 +37,10 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
 
     try {
       await ref.delete()
-      toast({
-        status: 'success',
-        title: 'Post annhilated! 💥',
-        isClosable: true,
-        position: 'bottom-left'
-      })
+      toast({ ...TOAST_ERROR, title: 'Post annihilated! 💥' })
     } catch (e) {
       console.error(e.message)
-      toast({
-        status: 'error',
-        title: 'Server Error',
-        description: e.message,
-        isClosable: true,
-        position: 'bottom-left'
-      })
+      firebaseErrorToast(e.message)
     }
   }
 
