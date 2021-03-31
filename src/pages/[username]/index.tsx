@@ -26,32 +26,30 @@ const UserProfilePage: NextPage<PageProps> = ({ user, posts }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { username } = query
-
-  // get user document data associated with username in url
-  const userDoc = await getUserWithUsername(username as string)
-
+  const username = query.username as string
   let user = null
   let posts = null
 
-  if (userDoc) {
-    user = userDoc.data()
-
-    // setup posts query
-    const postsQuery = userDoc.ref
-      .collection('posts')
-      .where('published', '==', true)
-      .orderBy('createdAt', 'desc')
-      .limit(5)
-
-    try {
-      // attempt query and convert each post document to JSON
-      posts = (await postsQuery.get()).docs.map(postToJSON)
-    } catch (e) {
-      console.error(e.message)
-    }
+  const userDoc = await getUserWithUsername(username)
+  if (!userDoc) {
+    // force 404 page if no user
+    return { notFound: true }
   }
+  user = userDoc.data()
 
+  const postsQuery = userDoc.ref
+    .collection('posts')
+    .where('published', '==', true)
+    .orderBy('createdAt', 'desc')
+    .limit(5)
+
+  // attempt query and convert each post document to JSON
+  try {
+    posts = (await postsQuery.get()).docs.map(postToJSON)
+  } catch (e) {
+    console.error(e.message)
+    return { notFound: true }
+  }
   return {
     props: { user, posts }
   }

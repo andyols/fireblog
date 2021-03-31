@@ -1,5 +1,14 @@
 import { extendTheme } from '@chakra-ui/react'
 
-const theme = extendTheme({})
+const styles = {
+  global: () => ({
+    html: {
+      minW: 'xs',
+      scrollBehavior: 'smooth'
+    }
+  })
+}
+
+const theme = extendTheme({ styles })
 
 export default theme

@@ -40,15 +40,27 @@ const REVALIDATE_INTERVAL = 5 // in seconds
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const { username, slug } = params as Params
+
   const userDoc = await getUserWithUsername(username)
+  if (!userDoc) {
+    return { notFound: true }
+  }
+
+  const postRef = userDoc.ref.collection('posts').doc(slug)
 
   let post = null
   let path = null
-
-  if (userDoc) {
-    const postRef = userDoc.ref.collection('posts').doc(slug)
+  try {
     post = postToJSON(await postRef.get())
+
+    if (!post) {
+      return { notFound: true }
+    }
+
     path = postRef.path
+  } catch (e) {
+    console.error(e.message)
+    return { notFound: true }
   }
 
   return {
