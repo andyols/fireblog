@@ -12,7 +12,7 @@ import { DocumentData, DocumentReference } from '@firebase/firestore-types'
 import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
-import { firebaseErrorToast } from '@utils/firebaseErrorToast'
+import { errorToast } from '@utils/errorToast'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -60,7 +60,7 @@ const PostForm: React.FC<PostFormProps> = ({
       setLoading(false)
     } catch (e) {
       console.error(e.message)
-      firebaseErrorToast(e.message)
+      errorToast(e.message)
       setLoading(false)
     }
   }

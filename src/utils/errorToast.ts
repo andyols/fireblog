@@ -6,11 +6,11 @@ import { TOAST_ERROR } from '@lib/constants'
  * @param description
  * @returns A chakra-ui error toast displaying the given message
  */
-export const firebaseErrorToast = (description: string) => {
+export const errorToast = (description: string) => {
   const toast = createStandaloneToast()
   return toast({
     ...TOAST_ERROR,
-    title: 'Server Error 📡',
+    title: 'Oops! Something went wrong.',
     description
   })
 }
