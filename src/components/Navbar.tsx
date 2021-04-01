@@ -26,8 +26,9 @@ export const Navbar: React.FC = () => {
         <Heading
           as='a'
           _hover={{ cursor: 'pointer', transform: 'scale(1.05)' }}
+          color='white'
         >
-          🔥
+          Firebl🔥g
         </Heading>
       </Link>
       <HStack>
