@@ -30,7 +30,7 @@ export const Layout: React.FC<LayoutProps> = ({
     description:
       'A social blogging platform inspired by sites like DEV.to and Medium. Read, write and share your thoughts and ideas. Fast. Simple. Fun.',
     type: 'website',
-    image: `${rootURL}/static/banner.png`,
+    image: `${rootURL}/static/images/card.png`,
     ...customMeta
   } as TMeta
 
