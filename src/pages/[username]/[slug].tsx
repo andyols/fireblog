@@ -59,7 +59,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   try {
     post = postToJSON(await postRef.get())
 
-    if (!post) {
+    if (!post || !post.published) {
       return { notFound: true }
     }
 

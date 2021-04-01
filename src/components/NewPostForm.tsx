@@ -46,7 +46,7 @@ export const NewPostForm: React.FC = () => {
       blazeCount: 0,
       content: '# hello world!',
       createdAt: serverTimestamp() as Timestamp,
-      published: true,
+      published: false,
       slug,
       title,
       uid,

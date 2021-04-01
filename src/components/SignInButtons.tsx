@@ -1,7 +1,7 @@
 import { Button, Text } from '@chakra-ui/react'
 import { AuthProvider } from '@firebase/auth-types'
 import { auth, githubAuthProvider, googleAuthProvider } from '@lib/firebase'
-import { firebaseErrorToast } from '@utils/firebaseErrorToast'
+import { errorToast } from '@utils/errorToast'
 import React from 'react'
 import { FaGoogle, FaMask } from 'react-icons/fa'
 import { FiGithub } from 'react-icons/fi'
@@ -11,7 +11,7 @@ export const SignInButtons: React.FC = () => {
     try {
       await auth.signInWithPopup(provider)
     } catch (e) {
-      firebaseErrorToast(e.message)
+      errorToast(e.message)
       console.error(e.message)
     }
   }
@@ -19,7 +19,7 @@ export const SignInButtons: React.FC = () => {
     try {
       await auth.signInAnonymously()
     } catch (e) {
-      firebaseErrorToast(e.message)
+      errorToast(e.message)
       console.error(e.message)
     }
   }

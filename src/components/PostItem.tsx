@@ -1,4 +1,6 @@
 import {
+  Badge,
+  Box,
   Button,
   ButtonGroup,
   HStack,
@@ -30,15 +32,37 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
       shadow='xs'
       as='article'
     >
-      <Stack spacing={0}>
-        <Link href={`/${post.username}/${post.slug}`}>
-          <ChakraLink fontWeight='semibold' fontSize='lg'>
-            {post.title}
-          </ChakraLink>
-        </Link>
-        <Link href={`/${post.username}`}>
-          <ChakraLink color='messenger.500'>@{post.username}</ChakraLink>
-        </Link>
+      <Stack spacing={0} w='full'>
+        <HStack w='full' justify='space-between' align='start'>
+          {post.published ? (
+            <Link href={`/${post.username}/${post.slug}`}>
+              <ChakraLink fontWeight='semibold' fontSize='lg'>
+                {post.title}
+              </ChakraLink>
+            </Link>
+          ) : (
+            <Text fontWeight='semibold' fontSize='lg'>
+              {post.title}
+            </Text>
+          )}
+          <HStack>
+            {admin && (
+              <Badge colorScheme={post.published ? 'whatsapp' : 'gray'}>
+                {post.published ? 'published' : 'private'}
+              </Badge>
+            )}
+            {post.blazeCount > 0 && (
+              <Text color='gray.800' fontSize='sm' fontWeight='semibold'>
+                {post.blazeCount} 🔥
+              </Text>
+            )}
+          </HStack>
+        </HStack>
+        <Box>
+          <Link href={`/${post.username}`}>
+            <ChakraLink color='messenger.500'>@{post.username}</ChakraLink>
+          </Link>
+        </Box>
         <Text pt={2} color='gray.600' fontSize='sm'>
           ⏳ {minutesToRead} min read
         </Text>
@@ -53,16 +77,6 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
           </ButtonGroup>
         )}
       </Stack>
-      {post.blazeCount > 0 && (
-        <Text
-          alignSelf='start'
-          color='gray.800'
-          fontSize='sm'
-          fontWeight='semibold'
-        >
-          {post.blazeCount} Blaze{post.blazeCount !== 1 && 's'} 🔥
-        </Text>
-      )}
     </HStack>
   )
 }
