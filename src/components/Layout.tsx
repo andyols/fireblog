@@ -23,7 +23,7 @@ export const Layout: React.FC<LayoutProps> = ({
   ...customMeta
 }) => {
   const router = useRouter()
-  const rootURL = 'https://fireblog-andyols.vercel.app'
+  const rootURL = 'https://fireblogg.vercel.app'
 
   const meta = {
     title: 'A Social Blogging Platform',
