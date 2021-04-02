@@ -1,4 +1,5 @@
 import { Box, Code, Flex } from '@chakra-ui/react'
+import { useColors } from '@utils/useColors'
 import ChakraUIRenderer, { defaults } from 'chakra-ui-markdown-renderer'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -22,8 +23,10 @@ const markdownTheme = {
             pl={6}
             pr={16}
             className={className || undefined}
+            border='1px solid'
+            borderColor={useColors('border')}
             borderRadius='md'
-            shadow='inner'
+            bg={useColors('background')}
           >
             {value}
           </Code>
@@ -43,9 +46,10 @@ export const Markdown: React.FC<MarkdownProps> = ({ markdown }) => {
       flexDir='column'
       p={4}
       pr={12}
-      bg='white'
-      shadow='base'
+      bg={useColors('paper')}
       maxW='100%'
+      border='1px solid'
+      borderColor={useColors('border')}
       borderRadius='base'
       as='article'
     >

@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, STATE_CHANGED, storage } from '@lib/firebase'
+import { useColors } from '@utils/useColors'
 import { writeToClipboard } from '@utils/writeToClipboard'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
 
@@ -16,6 +17,7 @@ export const ImageUploader: React.FC = () => {
   const [progress, setProgress] = useState(0)
   const [downloadURL, setDownloadURL] = useState('')
   const [imgMarkdown, setImgMarkdown] = useState('')
+  const toast = useToast()
 
   const uploadFile = async (e: FormEvent) => {
     const el = e.currentTarget as HTMLInputElement
@@ -52,7 +54,6 @@ export const ImageUploader: React.FC = () => {
     }
   }
 
-  const toast = useToast()
   useEffect(() => {
     if (downloadURL.length && !imgMarkdown.length) {
       setImgMarkdown(`![alt](${downloadURL})`)
@@ -73,15 +74,16 @@ export const ImageUploader: React.FC = () => {
       {imgMarkdown && (
         <Code
           fontSize='xs'
-          w='min-content'
           py={2}
           px={3}
+          border='1px solid'
+          borderColor={useColors('border')}
           borderRadius='base'
           cursor='pointer'
-          shadow='sm'
           transition='ease-in-out 0.2s'
           userSelect='none'
-          _hover={{ bg: 'gray.200' }}
+          bg={useColors('paper')}
+          _hover={{ color: useColors('blue') }}
           onClick={() => {
             writeToClipboard(imgMarkdown)
             toast({

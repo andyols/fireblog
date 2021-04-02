@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useAuth } from '@lib/auth'
 import { firestore } from '@lib/firebase'
+import { useColors } from '@utils/useColors'
 import debounce from 'lodash.debounce'
 import React, { useCallback, useEffect, useState } from 'react'
 
@@ -83,13 +84,20 @@ export const UsernameForm: React.FC = () => {
         <FormLabel>Choose a Username</FormLabel>
         <Input
           name='username'
-          bg='white'
+          bg={useColors('paper')}
+          borderColor={useColors('border')}
           placeholder='username'
           value={formValue}
           onChange={onChange}
         />
         <FormHelperText
-          color={isValid ? 'whatsapp.500' : loading ? 'gray.500' : 'red.500'}
+          color={
+            isValid
+              ? useColors('green')
+              : loading
+              ? useColors('gray')
+              : useColors('red')
+          }
         >
           {loading
             ? 'Checking username...'
@@ -100,7 +108,7 @@ export const UsernameForm: React.FC = () => {
             : ''}
         </FormHelperText>
         <Button mt={4} type='submit' colorScheme='whatsapp' disabled={!isValid}>
-          Choose
+          Choose {formValue}
         </Button>
       </FormControl>
     </Stack>

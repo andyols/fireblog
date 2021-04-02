@@ -10,7 +10,7 @@ interface PostFeedProps {
 
 export const PostFeed: React.FC<PostFeedProps> = ({ admin, posts }) => {
   return (
-    <Stack py={4} w='full' as='section'>
+    <Stack pb={4} w='full' as='section'>
       {posts.map((post) => (
         <PostItem post={post} key={post.slug} admin={admin || false} />
       ))}

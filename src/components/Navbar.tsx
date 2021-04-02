@@ -2,9 +2,11 @@ import { Avatar, Button, Heading, HStack } from '@chakra-ui/react'
 import { useAuth } from '@lib/auth'
 import { auth } from '@lib/firebase'
 import { isUserAnonymous } from '@utils/isUserAnonymous'
+import { useColors } from '@utils/useColors'
 import { useRouter } from 'next/dist/client/router'
 import Link from 'next/link'
 import React from 'react'
+import { ColorModeSwitch } from './ColorModeSwitch'
 
 export const Navbar: React.FC = () => {
   const { user } = useAuth()
@@ -18,7 +20,7 @@ export const Navbar: React.FC = () => {
     <HStack
       justify='space-between'
       p={4}
-      bg='messenger.500'
+      bg={useColors('paper')}
       shadow='xs'
       as='nav'
     >
@@ -26,12 +28,12 @@ export const Navbar: React.FC = () => {
         <Heading
           as='a'
           _hover={{ cursor: 'pointer', transform: 'scale(1.05)' }}
-          color='white'
         >
-          Firebl🔥g
+          🔥
         </Heading>
       </Link>
       <HStack>
+        <ColorModeSwitch />
         {!user && router.pathname !== '/enter' && (
           <Link href='/enter'>
             <Button colorScheme='whatsapp'>Login</Button>
@@ -44,11 +46,7 @@ export const Navbar: React.FC = () => {
                 <Button colorScheme='whatsapp'>My Posts</Button>
               </Link>
             )}
-            {user && (
-              <Button colorScheme='messenger' onClick={handleSignOut}>
-                Logout
-              </Button>
-            )}
+            {user && <Button onClick={handleSignOut}>Logout</Button>}
             {user.username && (
               <Link href={`/${user.username}`}>
                 <Avatar
