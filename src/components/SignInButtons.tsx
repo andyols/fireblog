@@ -1,4 +1,4 @@
-import { Button, Text } from '@chakra-ui/react'
+import { Button, Text, useColorModeValue } from '@chakra-ui/react'
 import { AuthProvider } from '@firebase/auth-types'
 import { auth, githubAuthProvider, googleAuthProvider } from '@lib/firebase'
 import { errorToast } from '@utils/errorToast'
@@ -7,6 +7,10 @@ import { FaGoogle, FaMask } from 'react-icons/fa'
 import { FiGithub } from 'react-icons/fi'
 
 export const SignInButtons: React.FC = () => {
+  const githubBg = useColorModeValue('gray.800', 'black')
+  const githubHoverBg = useColorModeValue('black', 'rgb(0,0,0,0.5)')
+  const githubColor = useColorModeValue('white', 'gray.100')
+
   const signInWithProvider = async (provider: AuthProvider) => {
     try {
       await auth.signInWithPopup(provider)
@@ -33,9 +37,9 @@ export const SignInButtons: React.FC = () => {
         Sign In With Google
       </Button>
       <Button
-        bg='gray.700'
-        color='white'
-        _hover={{ bg: 'gray.800' }}
+        bg={githubBg}
+        color={githubColor}
+        _hover={{ bg: githubHoverBg }}
         leftIcon={<FiGithub />}
         onClick={() => signInWithProvider(githubAuthProvider)}
       >

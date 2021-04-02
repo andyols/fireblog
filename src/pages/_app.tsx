@@ -1,15 +1,14 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraWrapper } from '@components/ChakraWrapper'
 import { AuthProvider } from '@lib/auth'
-import theme from '@lib/theme'
 import { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraWrapper cookies={pageProps.cookies}>
       <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
-    </ChakraProvider>
+    </ChakraWrapper>
   )
 }
 

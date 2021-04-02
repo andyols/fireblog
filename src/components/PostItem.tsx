@@ -9,6 +9,7 @@ import {
   Text
 } from '@chakra-ui/react'
 import { Post } from '@lib/types'
+import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import React from 'react'
 import { FiEdit } from 'react-icons/fi'
@@ -26,22 +27,23 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
   return (
     <HStack
       justify='space-between'
-      bg='white'
+      bg={useColors('paper')}
       p={4}
       borderRadius='base'
-      shadow='xs'
+      border='1px solid'
+      borderColor={useColors('border')}
       as='article'
     >
       <Stack spacing={0} w='full'>
         <HStack w='full' justify='space-between' align='start'>
           {post.published ? (
             <Link href={`/${post.username}/${post.slug}`}>
-              <ChakraLink fontWeight='semibold' fontSize='lg'>
+              <ChakraLink fontWeight='semibold' fontSize='2xl'>
                 {post.title}
               </ChakraLink>
             </Link>
           ) : (
-            <Text fontWeight='semibold' fontSize='lg'>
+            <Text fontWeight='semibold' fontSize='2xl'>
               {post.title}
             </Text>
           )}
@@ -52,7 +54,11 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
               </Badge>
             )}
             {post.blazeCount > 0 && (
-              <Text color='gray.800' fontSize='sm' fontWeight='semibold'>
+              <Text
+                color={useColors('gray')}
+                fontSize='sm'
+                fontWeight='semibold'
+              >
                 {post.blazeCount} 🔥
               </Text>
             )}
@@ -60,16 +66,16 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
         </HStack>
         <Box>
           <Link href={`/${post.username}`}>
-            <ChakraLink color='messenger.500'>@{post.username}</ChakraLink>
+            <ChakraLink color={useColors('blue')}>@{post.username}</ChakraLink>
           </Link>
         </Box>
-        <Text pt={2} color='gray.600' fontSize='sm'>
+        <Text pt={2} color={useColors('gray')} fontSize='sm'>
           ⏳ {minutesToRead} min read
         </Text>
         {admin && (
           <ButtonGroup pt={4} size='sm' align='flex-start'>
             <Link href={`admin/${post.slug}`}>
-              <Button leftIcon={<FiEdit />} color='messenger.500'>
+              <Button leftIcon={<FiEdit />} color={useColors('green')}>
                 Edit
               </Button>
             </Link>

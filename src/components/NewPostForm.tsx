@@ -4,6 +4,8 @@ import { useAuth } from '@lib/auth'
 import { TOAST_INFO, TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
+import { errorToast } from '@utils/errorToast'
+import { useColors } from '@utils/useColors'
 import kebabcase from 'lodash.kebabcase'
 import React, { useState } from 'react'
 
@@ -59,6 +61,7 @@ export const NewPostForm: React.FC = () => {
       toast({ ...TOAST_SUCCESS, title: 'Post created! 📃' })
       setTitle('')
     } catch (e) {
+      errorToast(e.message)
       console.error(e.message)
     }
 
@@ -73,7 +76,8 @@ export const NewPostForm: React.FC = () => {
         placeholder='My New Post!'
         fontWeight='semibold'
         fontSize='lg'
-        bg='white'
+        bg={useColors('paper')}
+        borderColor={useColors('border')}
       />
       <Button
         mt={2}

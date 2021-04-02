@@ -8,6 +8,7 @@ import {
   Text
 } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
+import { useColors } from '@utils/useColors'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { FaGhost } from 'react-icons/fa'
@@ -23,7 +24,6 @@ const Custom404: NextPage = () => {
     <Layout title='Error 404'>
       <Stack textAlign='center' align='center'>
         <Heading
-          color='gray.700'
           alignSelf='center'
           pb={4}
           fontSize={['7.5rem', '12.5rem']}
@@ -33,31 +33,30 @@ const Custom404: NextPage = () => {
           <Icon
             as={FaGhost}
             animation={`${spooky} 2s alternate infinite linear`}
-            color='gray.700'
+            color={useColors('blue')}
             filter='drop-shadow(.04em .04em 0 rgba(0,0,0,.33))'
           />
           4
         </Heading>
-        <Text fontWeight='bold' fontSize='2xl' pb={4} color='gray.700'>
+        <Text fontWeight='bold' fontSize='2xl' pb={4}>
           This isn't the page you're looking for...
         </Text>
         <Link href='/'>
-          <Button
-            as='a'
-            size='lg'
-            fontSize='xl'
-            colorScheme='whatsapp'
-            minW='200px'
-            leftIcon={<TiChevronLeft />}
-          >
+          <Button as='a' size='lg' leftIcon={<TiChevronLeft />}>
             Go Home
           </Button>
         </Link>
       </Stack>
-      <Text color='gray.500' fontSize='xs' pos='absolute' bottom={2} right={4}>
+      <Text
+        color={useColors('gray')}
+        fontSize='xs'
+        pos='absolute'
+        bottom={2}
+        right={4}
+      >
         thanks{' '}
         <ChakraLink
-          color='messenger.400'
+          color={useColors('blue')}
           href='https://codepen.io/Jake_Woods'
           isExternal
         >

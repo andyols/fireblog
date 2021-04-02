@@ -15,6 +15,7 @@ import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
 import { errorToast } from '@utils/errorToast'
 import { isUserAnonymous } from '@utils/isUserAnonymous'
+import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -87,7 +88,8 @@ const PostForm: React.FC<PostFormProps> = ({
               minLength: { value: 10, message: 'Content is too short!' },
               required: 'Content is required!'
             })}
-            bg='white'
+            bg={useColors('paper')}
+            borderColor={useColors('border')}
             h={64}
             spellCheck={false}
           />

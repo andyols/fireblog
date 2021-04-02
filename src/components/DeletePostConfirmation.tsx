@@ -11,6 +11,7 @@ import {
 import { TOAST_ERROR } from '@lib/constants'
 import { auth, firestore } from '@lib/firebase'
 import { errorToast } from '@utils/errorToast'
+import { useColors } from '@utils/useColors'
 import React, { RefObject, useRef, useState } from 'react'
 import { FiTrash } from 'react-icons/fi'
 
@@ -46,7 +47,7 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
 
   return (
     <>
-      <Button leftIcon={<FiTrash />} color='red.500' onClick={onOpen}>
+      <Button leftIcon={<FiTrash />} color={useColors('red')} onClick={onOpen}>
         Delete
       </Button>
       <AlertDialog

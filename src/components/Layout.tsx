@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react'
+import { useColors } from '@utils/useColors'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -35,7 +36,7 @@ export const Layout: React.FC<LayoutProps> = ({
   } as TMeta
 
   return (
-    <Flex flexDir='column' minH='100vh' bg='gray.50' pb={16}>
+    <Flex flexDir='column' minH='100vh' bg={useColors('background')} pb={16}>
       <Head>
         <title>{`Fireblog | ${meta.title}`}</title>
         <meta name='description' content={meta.description} />

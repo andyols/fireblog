@@ -47,7 +47,9 @@ const HomePage: NextPage<PageProps> = ({ initialPosts }) => {
 
   return (
     <Layout>
-      <Heading>Latest Posts</Heading>
+      <Heading as='h1' fontSize='xl'>
+        Latest Posts
+      </Heading>
       {initialPosts && <PostFeed posts={feed} />}
       <Button
         isLoading={loading}

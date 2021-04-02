@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { timestampToDate } from '@lib/firebase'
 import { Post } from '@lib/types'
+import { useColors } from '@utils/useColors'
 import React from 'react'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { Markdown } from './Markdown'
@@ -20,10 +21,10 @@ export const PostContent: React.FC<PostContentProps> = ({ post }) => {
     <Stack pb={8} as='section' w='full'>
       <Stack spacing={1} as='header'>
         <Heading fontSize='3xl'>{post.title}</Heading>
-        <Text color='gray.500'>
+        <Text color={useColors('gray')}>
           Written by{' '}
           <Link href={`/${post.username}`}>
-            <ChakraLink as='span' color='messenger.500'>
+            <ChakraLink as='span' color={useColors('blue')}>
               @{post.username}
             </ChakraLink>
           </Link>{' '}
