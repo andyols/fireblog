@@ -120,7 +120,7 @@ export const PostEditor: React.FC = () => {
   const [preview, setPreview] = useState(false)
 
   const router = useRouter()
-  const slug = router.query.slug as string
+  const slug = encodeURI(router.query.slug as string)
 
   const postRef = firestore
     .collection('users')
