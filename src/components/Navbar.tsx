@@ -24,10 +24,13 @@ export const Navbar: React.FC = () => {
       shadow='xs'
       as='nav'
     >
-      <Link href='/'>
+      <Link href='/' passHref>
         <Heading
-          as='a'
-          _hover={{ cursor: 'pointer', transform: 'scale(1.05)' }}
+          as={Button}
+          variant='unstyled'
+          p={0}
+          bg='none'
+          _hover={{ cursor: 'pointer', transform: 'scale(1.05)', bg: 'none' }}
         >
           🔥
         </Heading>
@@ -48,8 +51,11 @@ export const Navbar: React.FC = () => {
             )}
             {user && <Button onClick={handleSignOut}>Logout</Button>}
             {user.username && (
-              <Link href={`/${user.username}`}>
+              <Link href={`/${user.username}`} passHref>
                 <Avatar
+                  as={Button}
+                  variant='unstyled'
+                  p={0}
                   _hover={{ cursor: 'pointer' }}
                   src={user.photoURL as string}
                 />

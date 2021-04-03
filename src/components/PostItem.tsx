@@ -37,7 +37,7 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
       <Stack spacing={0} w='full'>
         <HStack w='full' justify='space-between' align='start'>
           {post.published ? (
-            <Link href={`/${post.username}/${post.slug}`}>
+            <Link href={`/${post.username}/${post.slug}`} passHref>
               <ChakraLink fontWeight='semibold' fontSize='2xl'>
                 {post.title}
               </ChakraLink>
@@ -65,7 +65,7 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
           </HStack>
         </HStack>
         <Box>
-          <Link href={`/${post.username}`}>
+          <Link href={`/${post.username}`} passHref>
             <ChakraLink color={useColors('blue')}>@{post.username}</ChakraLink>
           </Link>
         </Box>
