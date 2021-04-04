@@ -47,7 +47,13 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
 
   return (
     <>
-      <Button leftIcon={<FiTrash />} color={useColors('red')} onClick={onOpen}>
+      <Button
+        leftIcon={<FiTrash />}
+        color={useColors('red')}
+        onClick={onOpen}
+        size='sm'
+        fontSize='md'
+      >
         Delete
       </Button>
       <AlertDialog

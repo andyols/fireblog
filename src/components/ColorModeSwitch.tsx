@@ -10,6 +10,7 @@ export const ColorModeSwitch: React.FC = () => {
       icon={colorMode === 'light' ? <FiMoon /> : <FiSun />}
       onClick={toggleColorMode}
       variant='ghost'
+      fontSize='xl'
     />
   )
 }

@@ -8,10 +8,6 @@ const config: ThemeConfig = {
 
 const styles = {
   global: () => ({
-    '.js-focus-visible :focus:not([data-focus-visible-added])': {
-      outline: 'none',
-      boxShadow: 'none'
-    },
     html: {
       minW: 'xs',
       scrollBehavior: 'smooth'

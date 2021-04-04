@@ -1,4 +1,5 @@
-import { HStack } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/react'
+import { AsideWrapper } from '@components/AsideWrapper'
 import { AuthCheck } from '@components/AuthCheck'
 import { BlazeButton } from '@components/BlazeButton'
 import { Layout } from '@components/Layout'
@@ -11,12 +12,18 @@ import {
 } from '@lib/firebase'
 import { Post } from '@lib/types'
 import { GetStaticPropsContext, NextPage } from 'next'
+import React from 'react'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 
 interface PageProps {
   post: Post
   path: string
 }
+type TParams = {
+  username: string
+  slug: string
+}
+const REVALIDATE_INTERVAL = 5 // in seconds
 
 const PostPage: NextPage<PageProps> = ({ post, path }) => {
   const postRef = firestore.doc(path)
@@ -25,27 +32,32 @@ const PostPage: NextPage<PageProps> = ({ post, path }) => {
 
   return (
     <Layout
-      title={`${realPost.title}`}
       date={`${timestampToDate(realPost.createdAt).toISOString()}`}
+      title={`${realPost.title}`}
+      justify={['center', 'start']}
+      width='lg'
+      variant='flushed'
     >
-      <HStack align='start' justify='start' w='full' spacing={4}>
+      <Stack direction={['column', 'column', 'row']}>
         <PostContent post={realPost} />
         <AuthCheck fallback={<BlazeButton postRef={null} />}>
-          <BlazeButton postRef={postRef} />
+          <AsideWrapper>
+            <Stack
+              align='center'
+              direction={['row', 'row', 'column']}
+              spacing={0}
+            >
+              <BlazeButton postRef={postRef} blazeCount={post.blazeCount} />
+            </Stack>
+          </AsideWrapper>
         </AuthCheck>
-      </HStack>
+      </Stack>
     </Layout>
   )
 }
 
-type Params = {
-  username: string
-  slug: string
-}
-const REVALIDATE_INTERVAL = 5 // in seconds
-
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-  const { username, slug } = params as Params
+  const { username, slug } = params as TParams
 
   const encodedSlug = encodeURI(slug)
 

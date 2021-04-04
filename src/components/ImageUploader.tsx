@@ -76,6 +76,7 @@ export const ImageUploader: React.FC = () => {
           fontSize='xs'
           py={2}
           px={3}
+          w='min-content'
           border='1px solid'
           borderColor={useColors('border')}
           borderRadius='base'

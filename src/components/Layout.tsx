@@ -4,7 +4,12 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Navbar } from './Navbar'
-import { Wrapper, WrapperVariant } from './Wrapper'
+import {
+  Wrapper,
+  WrapperJustify,
+  WrapperVariant,
+  WrapperWidth
+} from './Wrapper'
 
 export type TMeta = {
   title?: string
@@ -15,12 +20,16 @@ export type TMeta = {
 }
 
 interface LayoutProps extends TMeta {
+  width?: WrapperWidth
+  justify?: WrapperJustify
   variant?: WrapperVariant
 }
 
 export const Layout: React.FC<LayoutProps> = ({
-  variant,
+  width,
   children,
+  justify,
+  variant,
   ...customMeta
 }) => {
   const router = useRouter()
@@ -63,7 +72,9 @@ export const Layout: React.FC<LayoutProps> = ({
         )}
       </Head>
       <Navbar />
-      <Wrapper variant={variant}>{children}</Wrapper>
+      <Wrapper width={width} justify={justify} variant={variant}>
+        {children}
+      </Wrapper>
     </Flex>
   )
 }

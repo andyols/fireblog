@@ -11,13 +11,11 @@ const EnterPage: NextPage = () => {
   const { user } = useAuth()
 
   return (
-    <Layout variant='small' title='Sign In'>
+    <Layout width='sm' title='Sign In'>
       {user && !user.username && <UsernameForm />}
       {!user && (
         <>
-          <Heading placeSelf='center' fontSize='3xl'>
-            👋 Welcome to Fireblog!
-          </Heading>
+          <Heading textAlign='center'>👋 Welcome to Fireblog!</Heading>
           <Stack pt={4} align='center'>
             <SignInButtons />
           </Stack>
