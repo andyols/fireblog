@@ -1,37 +1,40 @@
-import { Box, Button } from '@chakra-ui/react'
+import { Button, Text } from '@chakra-ui/react'
 import { DocumentReference } from '@firebase/firestore-types'
 import { auth, firestore, incremnet } from '@lib/firebase'
+import { Post } from '@lib/types'
+import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useDocument } from 'react-firebase-hooks/firestore'
 
 interface BlazeButtonProps {
+  blazeCount?: Post['blazeCount']
   postRef: DocumentReference | null
 }
 
-export const BlazeButton: React.FC<BlazeButtonProps> = ({ postRef }) => {
+export const BlazeButton: React.FC<BlazeButtonProps> = ({
+  postRef,
+  blazeCount
+}) => {
   const router = useRouter()
   if (!postRef)
     // short circuit component here if postRef doesnt exist
     // this means current user is not authenticated so redirect to login page
     return (
-      <Box as='aside' position='sticky' top={8}>
-        <Link
-          href={`/enter?redirect=/${router.query.username}/${router.query.slug}`}
+      <Link
+        href={`/enter?redirect=/${router.query.username}/${router.query.slug}`}
+      >
+        <Button
+          aria-label='Sign in to like post'
+          filter='grayscale(1)'
+          fontSize='2xl'
+          variant='unstyled'
+          _hover={{ textDecor: 'none', filter: 'grayscale(0)' }}
         >
-          <Button
-            fontSize='2xl'
-            mt={20}
-            variant='link'
-            aria-label='Sign in to like post'
-            _hover={{ textDecor: 'none' }}
-            filter='grayscale(1)'
-          >
-            🔥
-          </Button>
-        </Link>
-      </Box>
+          🔥
+        </Button>
+      </Link>
     )
 
   const blazeRef = postRef.collection('blazes').doc(auth.currentUser?.uid)
@@ -65,18 +68,20 @@ export const BlazeButton: React.FC<BlazeButtonProps> = ({ postRef }) => {
   }
 
   return (
-    <Box as='aside' position='sticky' top={8}>
+    <>
       <Button
-        fontSize='2xl'
-        mt={20}
-        variant='link'
         aria-label='Like post'
-        _hover={{ textDecor: 'none' }}
         filter={`grayscale(${userHasBlazed ? '0' : '1'})`}
+        fontSize='2xl'
         onClick={() => (userHasBlazed ? removeBlaze() : addBlaze())}
+        variant='unstyled'
+        _hover={{ textDecor: 'none' }}
       >
         🔥
       </Button>
-    </Box>
+      <Text fontWeight='semibold' color={useColors('gray')}>
+        {blazeCount}
+      </Text>
+    </>
   )
 }

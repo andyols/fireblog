@@ -1,4 +1,5 @@
 import {
+  Divider,
   Heading,
   Link as ChakraLink,
   Link,
@@ -11,6 +12,7 @@ import { useColors } from '@utils/useColors'
 import React from 'react'
 import { Data } from 'react-firebase-hooks/firestore/dist/firestore/types'
 import { Markdown } from './Markdown'
+import { PostWrapper } from './PostWrapper'
 
 interface PostContentProps {
   post: Post | Data
@@ -18,9 +20,9 @@ interface PostContentProps {
 
 export const PostContent: React.FC<PostContentProps> = ({ post }) => {
   return (
-    <Stack pb={8} as='section' w='full'>
-      <Stack spacing={1} as='header'>
-        <Heading fontSize='3xl'>{post.title}</Heading>
+    <PostWrapper variant='flushed'>
+      <Stack spacing={1} as='article'>
+        <Heading>{post.title}</Heading>
         <Text color={useColors('gray')}>
           Written by{' '}
           <Link href={`/${post.username}`}>
@@ -31,7 +33,8 @@ export const PostContent: React.FC<PostContentProps> = ({ post }) => {
           on {timestampToDate(post.createdAt).toDateString()}
         </Text>
       </Stack>
+      <Divider pt={2} mb={4} />
       <Markdown markdown={post.content} />
-    </Stack>
+    </PostWrapper>
   )
 }

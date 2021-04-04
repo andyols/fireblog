@@ -25,6 +25,7 @@ import { useForm } from 'react-hook-form'
 import { ImageUploader } from './ImageUploader'
 import { Loader } from './Loader'
 import { Markdown } from './Markdown'
+import { PostWrapper } from './PostWrapper'
 
 interface PostFormProps {
   defaultValues: Data<DocumentData, '', ''>
@@ -72,7 +73,11 @@ const PostForm: React.FC<PostFormProps> = ({
 
   return (
     <Stack w='full' as='section'>
-      {preview && <Markdown markdown={watch('content')} />}
+      {preview && (
+        <PostWrapper>
+          <Markdown markdown={watch('content')} />
+        </PostWrapper>
+      )}
       <FormControl
         as='form'
         onSubmit={handleSubmit(updatePost)}
@@ -80,7 +85,6 @@ const PostForm: React.FC<PostFormProps> = ({
         isInvalid={!!errors['content']}
       >
         <Stack>
-          <ImageUploader />
           <Textarea
             name='content'
             ref={register({
@@ -90,25 +94,29 @@ const PostForm: React.FC<PostFormProps> = ({
             })}
             bg={useColors('paper')}
             borderColor={useColors('border')}
-            h={64}
+            resize='none'
+            h='60vh'
             spellCheck={false}
           />
           <FormErrorMessage>{errors['content']?.message}</FormErrorMessage>
           <Stack align='start' spacing={4}>
+            <HStack w='full' justify='space-between'>
+              <ImageUploader />
+              <Button
+                type='submit'
+                colorScheme='whatsapp'
+                isLoading={loading}
+                isDisabled={!isValid || !isDirty}
+                placeSelf='start'
+              >
+                Save Changes
+              </Button>
+            </HStack>
             {!isUserAnonymous() && (
               <Checkbox colorScheme='whatsapp' name='published' ref={register}>
                 Publish?
               </Checkbox>
             )}
-            <Button
-              type='submit'
-              colorScheme='whatsapp'
-              isLoading={loading}
-              isDisabled={!isValid || !isDirty}
-              placeSelf='start'
-            >
-              Save Changes
-            </Button>
           </Stack>
         </Stack>
       </FormControl>
@@ -134,10 +142,9 @@ export const PostEditor: React.FC = () => {
 
   return !post ? null : (
     <>
-      <Heading fontSize='2xl'>{post.title}</Heading>
-      <HStack align='end' justify='start' pt={2} w='full'>
-        <PostForm defaultValues={post} postRef={postRef} preview={preview} />
-        <Stack position='sticky' top={8} as='aside'>
+      <Stack direction={['column', 'column', 'row']} justify='space-between'>
+        <Heading>{post.title}</Heading>
+        <HStack>
           <Button
             onClick={() => setPreview(!preview)}
             colorScheme={preview ? 'messenger' : 'gray'}
@@ -149,8 +156,15 @@ export const PostEditor: React.FC = () => {
               <Button>🎥 Live View</Button>
             </Link>
           )}
-        </Stack>
-      </HStack>
+        </HStack>
+      </Stack>
+      <Stack
+        direction={['column', 'column', 'row']}
+        w='full'
+        spacing={[0, 0, 4]}
+      >
+        <PostForm defaultValues={post} postRef={postRef} preview={preview} />
+      </Stack>
     </>
   )
 }

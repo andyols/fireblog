@@ -12,7 +12,8 @@ export const Navbar: React.FC = () => {
       p={4}
       px={8}
       bg={useColors('paper')}
-      shadow='xs'
+      borderBottom='1px'
+      borderColor={useColors('border')}
       as='nav'
     >
       <Link href='/' passHref>

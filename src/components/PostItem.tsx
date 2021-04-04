@@ -1,8 +1,6 @@
 import {
   Badge,
-  Box,
   Button,
-  ButtonGroup,
   HStack,
   Link as ChakraLink,
   Stack,
@@ -35,52 +33,68 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
       as='article'
     >
       <Stack spacing={0} w='full'>
-        <HStack w='full' justify='space-between' align='start'>
-          {post.published ? (
-            <Link href={`/${post.username}/${post.slug}`} passHref>
-              <ChakraLink fontWeight='semibold' fontSize='2xl'>
+        <Stack
+          w='full'
+          justify='space-between'
+          align='start'
+          direction={['column', 'row']}
+        >
+          <Stack spacing={0}>
+            {/* POST TITLE */}
+            {post.published ? (
+              <Link href={`/${post.username}/${post.slug}`} passHref>
+                <ChakraLink fontWeight='semibold' fontSize={['xl', '2xl']}>
+                  {post.title}
+                </ChakraLink>
+              </Link>
+            ) : (
+              <Text fontWeight='semibold' fontSize='2xl'>
                 {post.title}
+              </Text>
+            )}
+            {/* POST AUTHOR */}
+            <Link href={`/${post.username}`} passHref>
+              <ChakraLink color={useColors('blue')}>
+                @{post.username}
               </ChakraLink>
             </Link>
-          ) : (
-            <Text fontWeight='semibold' fontSize='2xl'>
-              {post.title}
-            </Text>
-          )}
+            {/* POST READ TIME */}
+            {!admin && (
+              <Text pt={2} color={useColors('gray')} fontSize='sm'>
+                ⏳ {minutesToRead} min read
+              </Text>
+            )}
+          </Stack>
           <HStack>
+            {/* POST STATUS */}
             {admin && (
               <Badge colorScheme={post.published ? 'whatsapp' : 'gray'}>
                 {post.published ? 'published' : 'private'}
               </Badge>
             )}
+            {/* POST BLAZE COUNT */}
             {post.blazeCount > 0 && (
-              <Text
-                color={useColors('gray')}
-                fontSize='sm'
-                fontWeight='semibold'
-              >
-                {post.blazeCount} 🔥
+              <Text color={useColors('gray')} fontSize='sm'>
+                🔥 {post.blazeCount}
               </Text>
             )}
           </HStack>
-        </HStack>
-        <Box>
-          <Link href={`/${post.username}`} passHref>
-            <ChakraLink color={useColors('blue')}>@{post.username}</ChakraLink>
-          </Link>
-        </Box>
-        <Text pt={2} color={useColors('gray')} fontSize='sm'>
-          ⏳ {minutesToRead} min read
-        </Text>
+        </Stack>
+        {/* POST ACTIONS */}
         {admin && (
-          <ButtonGroup pt={4} size='sm' align='flex-start'>
+          <HStack pt={4} align='start' justify='space-between'>
             <Link href={`admin/${post.slug}`}>
-              <Button leftIcon={<FiEdit />} color={useColors('green')}>
+              <Button
+                leftIcon={<FiEdit />}
+                color={useColors('green')}
+                size='sm'
+                fontSize='md'
+              >
                 Edit
               </Button>
             </Link>
             <DeletePostConfirmation slug={post.slug} />
-          </ButtonGroup>
+          </HStack>
         )}
       </Stack>
     </HStack>
