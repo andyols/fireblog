@@ -1,4 +1,4 @@
-import { Button, Heading, HStack } from '@chakra-ui/react'
+import { Button, Heading, HStack, Text } from '@chakra-ui/react'
 import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import React from 'react'
@@ -14,7 +14,7 @@ export const Navbar: React.FC = () => {
       as='nav'
       justify='space-between'
       p={4}
-      px={8}
+      px={[2, 4, 8]}
       position='fixed'
       w='full'
       bg={bgColor}
@@ -25,12 +25,13 @@ export const Navbar: React.FC = () => {
       <Link href='/' passHref>
         <Heading
           as={Button}
-          variant='unstyled'
-          p={0}
-          bg='none'
-          _hover={{ cursor: 'pointer', transform: 'scale(1.05)', bg: 'none' }}
+          fontSize='4xl'
+          fontWeight='bold'
+          py={1}
+          px={2}
+          fontFamily='mono'
         >
-          🔥
+          BL<Text fontSize='2xl'>🔥</Text>G
         </Heading>
       </Link>
       <HStack>

@@ -63,26 +63,27 @@ export const UserMenu: React.FC = () => {
               />
             </MenuButton>
             <Portal>
-              <MenuList>
-                <Link href={`/${user?.username}`}>
-                  <MenuItem>
-                    <Box>
-                      <Text>{user?.displayName} </Text>
-                      <Text fontSize='sm' color={useColors('blue')}>
-                        @{user?.username}{' '}
-                      </Text>
-                    </Box>
-                  </MenuItem>
-                </Link>
-                {isMobile && (
+              <MenuList zIndex='overlay'>
+                {user.username && (
                   <>
+                    <Link href={`/${user?.username}`}>
+                      <MenuItem>
+                        <Box>
+                          <Text>{user?.displayName} </Text>
+                          <Text fontSize='sm' color={useColors('blue')}>
+                            @{user?.username}{' '}
+                          </Text>
+                        </Box>
+                      </MenuItem>
+                    </Link>
+
                     <MenuDivider />
                     <Link href='/admin'>
                       <MenuItem>My Posts</MenuItem>
                     </Link>
+                    <MenuDivider />
                   </>
                 )}
-                <MenuDivider />
                 <MenuItem onClick={handleSignOut}>Logout</MenuItem>
               </MenuList>
             </Portal>

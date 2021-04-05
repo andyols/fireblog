@@ -19,14 +19,16 @@ export const PostWrapper: React.FC<PostWrapperProps> = ({
       flexDir='column'
       p={4}
       pr={[6, 8, 12]}
+      pb={[20, 8]}
+      mb={[0, 12, 6]}
       bg={bg}
-      mb={-6}
       border={[`${variant === 'flushed' ? 'hidden' : '1px'}`, '1px']}
       borderColor={[borderColor, borderColor]}
       borderRadius='base'
-      minW={['100%', '100%', '90%']}
       w='full'
-      minH={['86vh', 'inherit']}
+      minW={['100%', '100%', '90%']}
+      h='full'
+      minH={['95vh', 'inherit']}
     >
       {children}
     </Flex>

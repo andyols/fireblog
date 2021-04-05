@@ -39,7 +39,7 @@ const colors: Record<Color, ColorMode> = {
   },
   gray: {
     light: 'gray.500',
-    dark: 'gray.600'
+    dark: 'gray.500'
   },
   paper: {
     light: 'white',
