@@ -72,7 +72,7 @@ const PostForm: React.FC<PostFormProps> = ({
   }
 
   return (
-    <Stack w='full' as='section'>
+    <>
       {preview && (
         <PostWrapper>
           <Markdown markdown={watch('content')} />
@@ -120,7 +120,7 @@ const PostForm: React.FC<PostFormProps> = ({
           </Stack>
         </Stack>
       </FormControl>
-    </Stack>
+    </>
   )
 }
 
