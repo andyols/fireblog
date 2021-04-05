@@ -143,7 +143,10 @@ export const PostEditor: React.FC = () => {
   return !post ? null : (
     <>
       <Stack direction={['column', 'column', 'row']} justify='space-between'>
-        <Heading>{post.title}</Heading>
+        <Heading fontSize={['xl', '2xl']}>
+          {preview ? '📄 ' : '📝 '}
+          {post.title}
+        </Heading>
         <HStack>
           <Button
             onClick={() => setPreview(!preview)}

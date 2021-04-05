@@ -16,8 +16,9 @@ export const AsideWrapper: React.FC = ({ children }) => {
       borderColor={borderColor}
       bottom={0}
       left={0}
-      py={2}
       px={4}
+      py={2}
+      spacing={0}
       position='fixed'
       w='full'
     >

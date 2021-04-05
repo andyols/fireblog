@@ -14,11 +14,12 @@ import { FiEdit } from 'react-icons/fi'
 import { DeletePostConfirmation } from './DeletePostConfirmation'
 
 interface PostItemProps {
-  admin: Boolean
+  admin?: Boolean
+  profile?: Boolean
   post: Post
 }
 
-export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
+export const PostItem: React.FC<PostItemProps> = ({ admin, post, profile }) => {
   const wordCount = post.content.trim().split(/\s+/g).length
   const minutesToRead = (wordCount / 100 + 1).toFixed(0)
 
@@ -38,26 +39,29 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
           justify='space-between'
           align='start'
           direction={['column', 'row']}
+          spacing={[1, 2]}
         >
           <Stack spacing={0}>
+            {/* POST AUTHOR */}
+            {!admin && !profile && (
+              <Link href={`/${post.username}`} passHref>
+                <ChakraLink color={useColors('blue')} fontSize={['sm', 'md']}>
+                  @{post.username}
+                </ChakraLink>
+              </Link>
+            )}
             {/* POST TITLE */}
             {post.published ? (
               <Link href={`/${post.username}/${post.slug}`} passHref>
-                <ChakraLink fontWeight='semibold' fontSize={['xl', '2xl']}>
+                <ChakraLink fontWeight='bold' fontSize={['lg', 'xl', '2xl']}>
                   {post.title}
                 </ChakraLink>
               </Link>
             ) : (
-              <Text fontWeight='semibold' fontSize='2xl'>
+              <Text fontWeight='bold' fontSize={['lg', 'xl', '2xl']}>
                 {post.title}
               </Text>
             )}
-            {/* POST AUTHOR */}
-            <Link href={`/${post.username}`} passHref>
-              <ChakraLink color={useColors('blue')}>
-                @{post.username}
-              </ChakraLink>
-            </Link>
             {/* POST READ TIME */}
             {!admin && (
               <Text pt={2} color={useColors('gray')} fontSize='sm'>
@@ -75,7 +79,7 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post }) => {
             {/* POST BLAZE COUNT */}
             {post.blazeCount > 0 && (
               <Text color={useColors('gray')} fontSize='sm'>
-                🔥 {post.blazeCount}
+                🔥 {post.blazeCount} blaze{post.blazeCount === 1 ? '' : 's'}
               </Text>
             )}
           </HStack>

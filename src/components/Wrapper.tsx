@@ -3,7 +3,7 @@ import React from 'react'
 
 export type WrapperWidth = 'sm' | 'md' | 'lg'
 export type WrapperJustify = SystemProps['justifyContent']
-export type WrapperVariant = 'flushed' | 'regular'
+export type WrapperVariant = 'flushed' | 'regular' | 'relaxed'
 
 interface WrapperProps {
   width?: WrapperWidth
@@ -22,8 +22,16 @@ export const Wrapper: React.FC<WrapperProps> = ({
   return (
     <Flex flex='auto' justify={justify} mt={NavbarHeight}>
       <Stack
-        py={variant === 'regular' ? [4, 8, 12] : [0, 4, 6]}
-        px={variant === 'regular' ? [2, 4, 8] : [0, 2, 4]}
+        py={
+          variant === 'relaxed'
+            ? [8, 16, 20]
+            : variant === 'regular'
+            ? [4, 8, 12]
+            : [0, 4, 6]
+        }
+        px={
+          variant === 'regular' || variant === 'relaxed' ? [2, 4, 8] : [0, 2, 4]
+        }
         maxW={
           width === 'lg'
             ? 'container.lg'
@@ -32,7 +40,7 @@ export const Wrapper: React.FC<WrapperProps> = ({
             : 'container.sm'
         }
         w='full'
-        as='main'
+        h='full'
       >
         {children}
       </Stack>
