@@ -15,7 +15,7 @@ export const PostFeed: React.FC<PostFeedProps> = ({
   posts
 }) => {
   return (
-    <Stack pb={4} w='full' as='section'>
+    <Stack w='full' as='section'>
       {posts.map((post) => (
         <PostItem post={post} key={post.slug} admin={admin} profile={profile} />
       ))}

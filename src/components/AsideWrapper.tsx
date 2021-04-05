@@ -17,7 +17,7 @@ export const AsideWrapper: React.FC = ({ children }) => {
       bottom={0}
       left={0}
       px={4}
-      py={2}
+      py={3}
       spacing={0}
       position='fixed'
       w='full'

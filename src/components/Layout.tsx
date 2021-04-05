@@ -44,8 +44,10 @@ export const Layout: React.FC<LayoutProps> = ({
     ...customMeta
   } as TMeta
 
+  const background = useColors('background')
+
   return (
-    <Flex flexDir='column' minH='100vh' bg={useColors('background')} pb={16}>
+    <Flex flexDir='column' minH='100vh' bg={background}>
       <Head>
         <title>{`Fireblog | ${meta.title}`}</title>
         <meta name='description' content={meta.description} />

@@ -11,7 +11,7 @@ const EnterPage: NextPage = () => {
   const { user } = useAuth()
 
   return (
-    <Layout width='sm' title='Sign In'>
+    <Layout width='sm' title='Sign In' variant='relaxed'>
       {user && !user.username && <UsernameForm />}
       {!user && (
         <>
