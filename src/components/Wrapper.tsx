@@ -17,10 +17,12 @@ export const Wrapper: React.FC<WrapperProps> = ({
   justify = 'center',
   variant = 'regular'
 }) => {
+  const NavbarHeight = '73px'
+
   return (
-    <Flex flex='auto' justify={justify}>
+    <Flex flex='auto' justify={justify} mt={NavbarHeight}>
       <Stack
-        py={variant === 'regular' ? [4, 8, 12] : [0, 2, 4]}
+        py={variant === 'regular' ? [4, 8, 12] : [0, 4, 6]}
         px={variant === 'regular' ? [2, 4, 8] : [0, 2, 4]}
         maxW={
           width === 'lg'

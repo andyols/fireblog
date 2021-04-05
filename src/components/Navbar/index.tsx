@@ -6,15 +6,21 @@ import { ColorModeSwitch } from '../ColorModeSwitch'
 import { UserMenu } from './UserMenu'
 
 export const Navbar: React.FC = () => {
+  const bgColor = useColors('paper')
+  const borderColor = useColors('border')
+
   return (
     <HStack
+      as='nav'
       justify='space-between'
       p={4}
       px={8}
-      bg={useColors('paper')}
+      position='fixed'
+      w='full'
+      bg={bgColor}
       borderBottom='1px'
-      borderColor={useColors('border')}
-      as='nav'
+      borderColor={borderColor}
+      zIndex='docked'
     >
       <Link href='/' passHref>
         <Heading
