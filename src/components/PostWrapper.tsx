@@ -23,7 +23,7 @@ export const PostWrapper: React.FC<PostWrapperProps> = ({
       border={[`${variant === 'flushed' ? 'hidden' : '1px'}`, '1px']}
       borderColor={[borderColor, borderColor]}
       borderRadius='base'
-      minW={['100%', '100%', '95%']}
+      minW={['100%', '100%', '90%']}
     >
       {children}
     </Flex>

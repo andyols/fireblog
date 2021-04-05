@@ -21,7 +21,7 @@ interface PostContentProps {
 export const PostContent: React.FC<PostContentProps> = ({ post }) => {
   return (
     <PostWrapper variant='flushed'>
-      <Stack spacing={1} as='article'>
+      <Stack spacing={1}>
         <Heading>{post.title}</Heading>
         <Text color={useColors('gray')}>
           Written by{' '}

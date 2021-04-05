@@ -1,4 +1,4 @@
-import { Box, Code } from '@chakra-ui/react'
+import { Box, Code, Stack } from '@chakra-ui/react'
 import { useColors } from '@utils/useColors'
 import ChakraUIRenderer, { defaults } from 'chakra-ui-markdown-renderer'
 import React from 'react'
@@ -42,9 +42,11 @@ interface MarkdownProps {
 
 export const Markdown: React.FC<MarkdownProps> = ({ markdown }) => {
   return (
-    <ReactMarkdown
-      children={markdown}
-      renderers={ChakraUIRenderer(markdownTheme)}
-    />
+    <Stack as='article'>
+      <ReactMarkdown
+        children={markdown}
+        renderers={ChakraUIRenderer(markdownTheme)}
+      />
+    </Stack>
   )
 }
