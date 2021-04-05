@@ -12,10 +12,14 @@ export const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
     <Stack align='center' as='section'>
       <Avatar size='2xl' src={user.photoURL || ''} shadow='md' />
       <Stack spacing={4} textAlign='center'>
-        <Text fontSize='lg' fontStyle='italic' color={useColors('blue')}>
+        <Text
+          fontSize={['md', 'lg']}
+          fontStyle='italic'
+          color={useColors('blue')}
+        >
           @{user.username}
         </Text>
-        <Heading>{user.displayName}</Heading>
+        <Heading fontSize={['2xl', '3xl']}>{user.displayName}</Heading>
       </Stack>
     </Stack>
   )

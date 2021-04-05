@@ -14,10 +14,10 @@ interface PageProps {
 
 const UserProfilePage: NextPage<PageProps> = ({ user, posts }) => {
   return (
-    <Layout title={`${user.username} (${user.displayName})`}>
+    <Layout title={`${user.username} (${user.displayName})`} variant='relaxed'>
       <Stack align='center' spacing={8}>
         {user && <UserProfile user={user} />}
-        {posts && <PostFeed posts={posts} />}
+        {posts && <PostFeed posts={posts} profile />}
       </Stack>
     </Layout>
   )

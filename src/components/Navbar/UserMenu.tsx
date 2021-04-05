@@ -24,6 +24,7 @@ export const UserMenu: React.FC = () => {
   const router = useRouter()
   const breakpoint = useBreakpoint()
   const isMobile = breakpoint === 'base'
+  const avatarOutline = '0 0 0 3px rgba(66, 153, 225, 0.6)'
 
   const handleSignOut = () => {
     return isUserAnonymous() ? auth.currentUser?.delete() : auth.signOut()
@@ -50,7 +51,9 @@ export const UserMenu: React.FC = () => {
             <MenuButton
               as={Avatar}
               variant='unstyled'
-              boxShadow={isOpen ? '0 0 0 3px rgba(66, 153, 225, 0.6)' : 'none'}
+              boxShadow={isOpen ? avatarOutline : 'none'}
+              transition='ease-in-out 0.15s'
+              _hover={{ cursor: 'pointer', boxShadow: avatarOutline }}
             >
               <Avatar
                 as={Button}

@@ -21,7 +21,7 @@ export const AdminPosts: React.FC<AdminPostsProps> = ({}) => {
 
   return (
     <>
-      <Heading>My Posts</Heading>
+      <Heading fontSize={['2xl', '3xl']}>My Posts</Heading>
       {loading ? <Loader /> : <PostFeed posts={posts} admin />}
       <NewPostForm />
     </>

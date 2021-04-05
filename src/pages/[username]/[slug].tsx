@@ -1,5 +1,4 @@
 import { Stack } from '@chakra-ui/react'
-import { AsideWrapper } from '@components/AsideWrapper'
 import { AuthCheck } from '@components/AuthCheck'
 import { BlazeButton } from '@components/BlazeButton'
 import { Layout } from '@components/Layout'
@@ -34,22 +33,18 @@ const PostPage: NextPage<PageProps> = ({ post, path }) => {
     <Layout
       date={`${timestampToDate(realPost.createdAt).toISOString()}`}
       title={`${realPost.title}`}
-      justify={['center', 'start']}
       width='lg'
       variant='flushed'
     >
       <Stack direction={['column', 'column', 'row']}>
+        {/* POST CONTENT */}
         <PostContent post={realPost} />
-        <AuthCheck fallback={<BlazeButton postRef={null} />}>
-          <AsideWrapper>
-            <Stack
-              align='center'
-              direction={['row', 'row', 'column']}
-              spacing={0}
-            >
-              <BlazeButton postRef={postRef} blazeCount={post.blazeCount} />
-            </Stack>
-          </AsideWrapper>
+
+        {/* POST ACTIONS */}
+        <AuthCheck
+          fallback={<BlazeButton postRef={null} blazeCount={post.blazeCount} />}
+        >
+          <BlazeButton postRef={postRef} blazeCount={post.blazeCount} />
         </AuthCheck>
       </Stack>
     </Layout>

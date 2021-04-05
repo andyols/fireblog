@@ -21,9 +21,9 @@ interface PostContentProps {
 export const PostContent: React.FC<PostContentProps> = ({ post }) => {
   return (
     <PostWrapper variant='flushed'>
-      <Stack spacing={1} as='article'>
-        <Heading>{post.title}</Heading>
-        <Text color={useColors('gray')}>
+      <Stack spacing={1}>
+        <Heading fontSize={['2xl', '3xl']}>{post.title}</Heading>
+        <Text color={useColors('gray')} fontSize={['sm', 'md']}>
           Written by{' '}
           <Link href={`/${post.username}`}>
             <ChakraLink as='span' color={useColors('blue')}>

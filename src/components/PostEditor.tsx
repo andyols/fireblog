@@ -72,7 +72,7 @@ const PostForm: React.FC<PostFormProps> = ({
   }
 
   return (
-    <Stack w='full' as='section'>
+    <>
       {preview && (
         <PostWrapper>
           <Markdown markdown={watch('content')} />
@@ -120,7 +120,7 @@ const PostForm: React.FC<PostFormProps> = ({
           </Stack>
         </Stack>
       </FormControl>
-    </Stack>
+    </>
   )
 }
 
@@ -143,7 +143,10 @@ export const PostEditor: React.FC = () => {
   return !post ? null : (
     <>
       <Stack direction={['column', 'column', 'row']} justify='space-between'>
-        <Heading>{post.title}</Heading>
+        <Heading fontSize={['xl', '2xl']}>
+          {preview ? '📄 ' : '📝 '}
+          {post.title}
+        </Heading>
         <HStack>
           <Button
             onClick={() => setPreview(!preview)}

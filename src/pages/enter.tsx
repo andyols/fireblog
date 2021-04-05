@@ -15,7 +15,9 @@ const EnterPage: NextPage = () => {
       {user && !user.username && <UsernameForm />}
       {!user && (
         <>
-          <Heading textAlign='center'>👋 Welcome to Fireblog!</Heading>
+          <Heading textAlign='center' fontSize={['2xl', '3xl', '4xl']}>
+            👋 Welcome to Fireblog!
+          </Heading>
           <Stack pt={4} align='center'>
             <SignInButtons />
           </Stack>
