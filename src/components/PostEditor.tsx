@@ -47,6 +47,9 @@ const PostForm: React.FC<PostFormProps> = ({
   })
   const { isDirty, isValid } = formState
 
+  const textAreaBg = useColors('paper')
+  const textAreaBorder = useColors('border')
+
   const updatePost = async ({ content, published }: Partial<Post>) => {
     setLoading(true)
     try {
@@ -85,6 +88,16 @@ const PostForm: React.FC<PostFormProps> = ({
         isInvalid={!!errors['content']}
       >
         <Stack>
+          {!isUserAnonymous() && (
+            <Checkbox
+              colorScheme='whatsapp'
+              name='published'
+              ref={register}
+              placeSelf='start'
+            >
+              Publish?
+            </Checkbox>
+          )}
           <Textarea
             name='content'
             ref={register({
@@ -92,32 +105,23 @@ const PostForm: React.FC<PostFormProps> = ({
               minLength: { value: 10, message: 'Content is too short!' },
               required: 'Content is required!'
             })}
-            bg={useColors('paper')}
-            borderColor={useColors('border')}
+            bg={textAreaBg}
+            borderColor={textAreaBorder}
             resize='none'
-            h='60vh'
+            h='50vh'
             spellCheck={false}
           />
-          <FormErrorMessage>{errors['content']?.message}</FormErrorMessage>
-          <Stack align='start' spacing={4}>
-            <HStack w='full' justify='space-between'>
-              <ImageUploader />
-              <Button
-                type='submit'
-                colorScheme='whatsapp'
-                isLoading={loading}
-                isDisabled={!isValid || !isDirty}
-                placeSelf='start'
-              >
-                Save Changes
-              </Button>
-            </HStack>
-            {!isUserAnonymous() && (
-              <Checkbox colorScheme='whatsapp' name='published' ref={register}>
-                Publish?
-              </Checkbox>
-            )}
-          </Stack>
+          <FormErrorMessage>{errors['content']?.message}</FormErrorMessage>{' '}
+          <ImageUploader />
+          <Button
+            type='submit'
+            colorScheme='whatsapp'
+            isLoading={loading}
+            isDisabled={!isValid || !isDirty}
+            placeSelf='start'
+          >
+            Save Changes
+          </Button>
         </Stack>
       </FormControl>
     </>
@@ -154,11 +158,9 @@ export const PostEditor: React.FC = () => {
           >
             👀 Preview
           </Button>
-          {post.published && (
-            <Link href={`/${post.username}/${post.slug}`}>
-              <Button>🎥 Live View</Button>
-            </Link>
-          )}
+          <Link href={`/${post.username}/${post.slug}`}>
+            <Button isDisabled={!post.published}>🎥 Live View</Button>
+          </Link>
         </HStack>
       </Stack>
       <Stack

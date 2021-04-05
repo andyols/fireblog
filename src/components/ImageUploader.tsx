@@ -1,8 +1,10 @@
 import {
   Button,
-  CircularProgress,
   Code,
+  HStack,
+  IconButton,
   Input,
+  Progress,
   useToast
 } from '@chakra-ui/react'
 import { TOAST_SUCCESS } from '@lib/constants'
@@ -10,13 +12,20 @@ import { auth, STATE_CHANGED, storage } from '@lib/firebase'
 import { useColors } from '@utils/useColors'
 import { writeToClipboard } from '@utils/writeToClipboard'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
+import { HiClipboard, HiClipboardCheck } from 'react-icons/hi'
 
 export const ImageUploader: React.FC = () => {
-  const [uploading, setUploading] = useState(false)
-  const [uploaded, setUploaded] = useState(false)
-  const [progress, setProgress] = useState(0)
   const [downloadURL, setDownloadURL] = useState('')
+  const [dlProgress, setDlProgress] = useState(0)
   const [imgMarkdown, setImgMarkdown] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [userCopied, setUserCopied] = useState(false)
+
+  const clipboardColor = userCopied ? useColors('green') : useColors('gray')
+  const imgMarkdownHover = useColors('blue')
+  const imgMarkdownBg = useColors('paper')
+  const imgMarkdownBorder = useColors('border')
+
   const toast = useToast()
 
   const uploadFile = async (e: FormEvent) => {
@@ -31,6 +40,8 @@ export const ImageUploader: React.FC = () => {
         `uploads/${auth.currentUser?.uid}/${Date.now()}.${ext}`
       )
       setUploading(true)
+      setImgMarkdown('')
+      setUserCopied(false)
 
       // start upload
       const task = ref.put(file)
@@ -40,78 +51,95 @@ export const ImageUploader: React.FC = () => {
         const pct = parseInt(
           ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
         )
-        setProgress(pct)
-
+        setDlProgress(pct)
         // get downloadURL after task resolves (note: this is not a native Promise)
         task
           .then(() => ref.getDownloadURL())
           .then((url) => {
             setDownloadURL(url)
-            setUploaded(true)
             setUploading(false)
+            setDlProgress(0)
           })
       })
     }
   }
 
+  const copyToClipboard = () => {
+    writeToClipboard(imgMarkdown)
+    toast({
+      ...TOAST_SUCCESS,
+      title: 'Markdown copied! 📄'
+    })
+    setDownloadURL('')
+    setUserCopied(true)
+  }
+
+  // generate markdown when downloadURL is available
   useEffect(() => {
     if (downloadURL.length && !imgMarkdown.length) {
       setImgMarkdown(`![alt](${downloadURL})`)
       toast({
         ...TOAST_SUCCESS,
-        title: 'Image uploaded!',
-        description: 'Click the generated markdown to copy to clipboard. '
+        title: 'Image Uploaded!'
       })
     }
-  }, [downloadURL, imgMarkdown])
+  }, [downloadURL])
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  return uploading ? (
-    <CircularProgress value={progress} />
-  ) : (
-    <>
-      {imgMarkdown && (
-        <Code
-          fontSize='xs'
-          py={2}
-          px={3}
-          w='min-content'
-          border='1px solid'
-          borderColor={useColors('border')}
-          borderRadius='base'
-          cursor='pointer'
-          transition='ease-in-out 0.2s'
-          userSelect='none'
-          bg={useColors('paper')}
-          _hover={{ color: useColors('blue') }}
-          onClick={() => {
-            writeToClipboard(imgMarkdown)
-            toast({
-              ...TOAST_SUCCESS,
-              title: 'Markdown copied! 📄'
-            })
-            setDownloadURL('')
-            setImgMarkdown('')
-            setUploaded(false)
-          }}
-        >
-          {imgMarkdown}
-        </Code>
-      )}
-      {!uploaded && (
-        <Button placeSelf='start' onClick={() => inputRef.current?.click()}>
+  return (
+    <HStack align='start'>
+      {!uploading ? (
+        <Button isLoading={uploading} onClick={() => inputRef.current?.click()}>
           <Input
             type='file'
             accept='image/x-png,image/gif,image/jpeg'
             ref={inputRef}
-            placeholder='Your image...'
             display='none'
             onChange={uploadFile}
           />
           📸 Upload Image
         </Button>
+      ) : (
+        <Progress
+          borderRadius='base'
+          colorScheme='messenger'
+          hasStripe
+          isAnimated
+          transition='ease-in-out .2s'
+          value={dlProgress}
+          w='full'
+          size='sm'
+        />
       )}
-    </>
+      {imgMarkdown.length && !uploading && (
+        <HStack flex='1 1 0%'>
+          <Code
+            fontSize='xs'
+            border='1px solid'
+            w='100%'
+            d='flex'
+            h='10'
+            wordBreak='break-all'
+            overflow='hidden'
+            borderColor={imgMarkdownBorder}
+            borderRadius='base'
+            bg={imgMarkdownBg}
+            _hover={{ color: imgMarkdownHover }}
+            onClick={copyToClipboard}
+          >
+            {imgMarkdown}
+          </Code>
+          <IconButton
+            aria-label='Copy image markdown to clipboard'
+            onClick={copyToClipboard}
+            icon={userCopied ? <HiClipboardCheck /> : <HiClipboard />}
+            fontSize='3xl'
+            variant='unstyled'
+            color={clipboardColor}
+          />
+        </HStack>
+      )}
+    </HStack>
   )
 }
