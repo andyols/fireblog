@@ -23,14 +23,20 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post, profile }) => {
   const wordCount = post.content.trim().split(/\s+/g).length
   const minutesToRead = (wordCount / 100 + 1).toFixed(0)
 
+  const itemBg = useColors('paper')
+  const itemBorder = useColors('border')
+  const itemProfileLink = useColors('blue')
+  const itemSubtleText = useColors('gray')
+  const itemEditColor = useColors('green')
+
   return (
     <HStack
       justify='space-between'
-      bg={useColors('paper')}
+      bg={itemBg}
       p={4}
       borderRadius='base'
       border='1px solid'
-      borderColor={useColors('border')}
+      borderColor={itemBorder}
       as='article'
     >
       <Stack spacing={0} w='full'>
@@ -45,7 +51,7 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post, profile }) => {
             {/* POST AUTHOR */}
             {!admin && !profile && (
               <Link href={`/${post.username}`} passHref>
-                <ChakraLink color={useColors('blue')} fontSize={['sm', 'md']}>
+                <ChakraLink color={itemProfileLink} fontSize={['sm', 'md']}>
                   @{post.username}
                 </ChakraLink>
               </Link>
@@ -64,7 +70,7 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post, profile }) => {
             )}
             {/* POST READ TIME */}
             {!admin && (
-              <Text pt={2} color={useColors('gray')} fontSize='sm'>
+              <Text pt={2} color={itemSubtleText} fontSize='sm'>
                 ⏳ {minutesToRead} min read
               </Text>
             )}
@@ -72,13 +78,16 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post, profile }) => {
           <HStack>
             {/* POST STATUS */}
             {admin && (
-              <Badge colorScheme={post.published ? 'whatsapp' : 'gray'}>
+              <Badge
+                colorScheme={post.published ? 'whatsapp' : 'gray'}
+                borderRadius='md'
+              >
                 {post.published ? 'published' : 'private'}
               </Badge>
             )}
             {/* POST BLAZE COUNT */}
             {post.blazeCount > 0 && (
-              <Text color={useColors('gray')} fontSize='sm'>
+              <Text color={itemSubtleText} fontSize='sm'>
                 🔥 {post.blazeCount} blaze{post.blazeCount === 1 ? '' : 's'}
               </Text>
             )}
@@ -90,7 +99,7 @@ export const PostItem: React.FC<PostItemProps> = ({ admin, post, profile }) => {
             <Link href={`admin/${post.slug}`}>
               <Button
                 leftIcon={<FiEdit />}
-                color={useColors('green')}
+                color={itemEditColor}
                 size='sm'
                 fontSize='md'
               >
