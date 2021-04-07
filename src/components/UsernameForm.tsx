@@ -18,6 +18,8 @@ export const UsernameForm: React.FC = () => {
   const [formValue, setFormValue] = useState('')
   const [isValid, setIsValid] = useState(false)
   const [loading, setLoading] = useState(false)
+  const inputBg = useColors('paper')
+  const inputBorder = useColors('border')
 
   const { user } = useAuth()
 
@@ -84,8 +86,8 @@ export const UsernameForm: React.FC = () => {
         <FormLabel>Choose a Username</FormLabel>
         <Input
           name='username'
-          bg={useColors('paper')}
-          borderColor={useColors('border')}
+          bg={inputBg}
+          borderColor={inputBorder}
           placeholder='username'
           value={formValue}
           onChange={onChange}

@@ -15,6 +15,9 @@ const markdownTheme = {
   code: (props: any) => {
     const { language, value } = props
     const className = language && `language-${language}`
+    const borderColor = useColors('border')
+    const bgColor = useColors('background')
+
     return (
       <pre {...getCoreProps(props)}>
         <Box overflowX='auto'>
@@ -24,9 +27,9 @@ const markdownTheme = {
             pr={16}
             className={className || undefined}
             border='1px solid'
-            borderColor={useColors('border')}
+            borderColor={borderColor}
             borderRadius='md'
-            bg={useColors('background')}
+            bg={bgColor}
           >
             {value}
           </Code>

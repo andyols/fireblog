@@ -24,6 +24,7 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const toast = useToast()
+  const trashColor = useColors('red')
   const cancelRef = useRef() as RefObject<HTMLButtonElement>
 
   const onOpen = () => setIsOpen(true)
@@ -49,7 +50,7 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
     <>
       <Button
         leftIcon={<FiTrash />}
-        color={useColors('red')}
+        color={trashColor}
         onClick={onOpen}
         size='sm'
         fontSize='md'

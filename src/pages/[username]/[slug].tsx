@@ -42,9 +42,11 @@ const PostPage: NextPage<PageProps> = ({ post, path }) => {
 
         {/* POST ACTIONS */}
         <AuthCheck
-          fallback={<BlazeButton postRef={null} blazeCount={post.blazeCount} />}
+          fallback={
+            <BlazeButton postRef={null} blazeCount={realPost.blazeCount} />
+          }
         >
-          <BlazeButton postRef={postRef} blazeCount={post.blazeCount} />
+          <BlazeButton postRef={postRef} blazeCount={realPost.blazeCount} />
         </AuthCheck>
       </Stack>
     </Layout>

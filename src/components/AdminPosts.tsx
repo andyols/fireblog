@@ -1,6 +1,6 @@
 import { Text } from '@chakra-ui/react'
 import { auth, firestore } from '@lib/firebase'
-import { Post } from '@lib/types'
+import { Feed } from '@lib/types'
 import React from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { Loader } from './Loader'
@@ -17,17 +17,21 @@ export const AdminPosts: React.FC<AdminPostsProps> = ({}) => {
   const query = ref.orderBy('createdAt')
   const [querySnapshot, loading] = useCollection(query)
 
-  const posts = querySnapshot?.docs.map((doc) => doc.data()) as Post[]
+  if (loading) return <Loader />
+
+  const posts = querySnapshot?.docs.map((doc) => doc.data()) as Feed
+  const userHasPosts = posts?.length
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : !posts?.length ? (
-        <Text fontWeight='semibold'>You currently have no posts...</Text>
-      ) : (
+      {userHasPosts ? (
         <PostFeed posts={posts} admin />
+      ) : (
+        <Text pb={2}>
+          You currently have no posts. Use the form below to get started!
+        </Text>
       )}
+
       <NewPostForm />
     </>
   )

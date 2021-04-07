@@ -20,6 +20,10 @@ const spooky = keyframes`
 `
 
 const Custom404: NextPage = () => {
+  const ghostColor = useColors('blue')
+  const subtleText = useColors('gray')
+  const linkColor = useColors('blue')
+
   return (
     <Layout title='Error 404'>
       <Stack textAlign='center' align='center'>
@@ -33,7 +37,7 @@ const Custom404: NextPage = () => {
           <Icon
             as={FaGhost}
             animation={`${spooky} 2s alternate infinite linear`}
-            color={useColors('blue')}
+            color={ghostColor}
             filter='drop-shadow(.04em .04em 0 rgba(0,0,0,.33))'
           />
           4
@@ -48,7 +52,7 @@ const Custom404: NextPage = () => {
         </Link>
       </Stack>
       <Text
-        color={useColors('gray')}
+        color={subtleText}
         fontSize='xs'
         pos='absolute'
         bottom={2}
@@ -56,7 +60,7 @@ const Custom404: NextPage = () => {
       >
         thanks{' '}
         <ChakraLink
-          color={useColors('blue')}
+          color={linkColor}
           href='https://codepen.io/Jake_Woods'
           isExternal
         >

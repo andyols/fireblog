@@ -50,7 +50,7 @@ const PostForm: React.FC<PostFormProps> = ({
   const textAreaBg = useColors('paper')
   const textAreaBorder = useColors('border')
 
-  const updatePost = async ({ content, published }: Partial<Post>) => {
+  const updatePost = async ({ content, published = false }: Partial<Post>) => {
     setLoading(true)
     try {
       await postRef.update({

@@ -23,6 +23,7 @@ export const UserMenu: React.FC = () => {
   const { user } = useAuth()
   const router = useRouter()
   const breakpoint = useBreakpoint()
+  const usernameColor = useColors('blue')
   const isMobile = breakpoint === 'base'
   const avatarOutline = '0 0 0 3px rgba(66, 153, 225, 0.6)'
 
@@ -70,7 +71,7 @@ export const UserMenu: React.FC = () => {
                       <MenuItem>
                         <Box>
                           <Text>{user?.displayName} </Text>
-                          <Text fontSize='sm' color={useColors('blue')}>
+                          <Text fontSize='sm' color={usernameColor}>
                             @{user?.username}{' '}
                           </Text>
                         </Box>

@@ -21,6 +21,7 @@ export const AsideWrapper: React.FC = ({ children }) => {
       spacing={0}
       position='fixed'
       w='full'
+      justify='flex-end'
     >
       {children}
     </HStack>

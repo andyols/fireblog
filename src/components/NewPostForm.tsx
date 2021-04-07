@@ -14,6 +14,8 @@ type FormEvent = React.FormEvent<HTMLInputElement>
 export const NewPostForm: React.FC = () => {
   const { user } = useAuth()
   const toast = useToast()
+  const inputBg = useColors('paper')
+  const inputBorder = useColors('border')
 
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(false)
@@ -76,8 +78,8 @@ export const NewPostForm: React.FC = () => {
         placeholder='My New Post!'
         fontWeight='semibold'
         fontSize='lg'
-        bg={useColors('paper')}
-        borderColor={useColors('border')}
+        bg={inputBg}
+        borderColor={inputBorder}
       />
       <Button
         mt={2}
