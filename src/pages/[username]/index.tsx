@@ -1,15 +1,15 @@
-import { Stack } from '@chakra-ui/react'
+import { Stack, Text } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { PostFeed } from '@components/PostFeed'
 import { UserProfile } from '@components/UserProfile'
 import { getUserWithUsername, postToJSON } from '@lib/firebase'
-import { Post, User } from '@lib/types'
+import { Feed, User } from '@lib/types'
 import { GetServerSideProps, NextPage } from 'next'
 import React from 'react'
 
 interface PageProps {
   user: User
-  posts: Post[]
+  posts: Feed
 }
 
 const UserProfilePage: NextPage<PageProps> = ({ user, posts }) => {
@@ -17,7 +17,11 @@ const UserProfilePage: NextPage<PageProps> = ({ user, posts }) => {
     <Layout title={`${user.username} (${user.displayName})`} variant='relaxed'>
       <Stack align='center' spacing={8}>
         {user && <UserProfile user={user} />}
-        {posts && <PostFeed posts={posts} profile />}
+        {posts?.length ? (
+          <PostFeed posts={posts} profile />
+        ) : (
+          <Text>This user has not published any posts.</Text>
+        )}
       </Stack>
     </Layout>
   )

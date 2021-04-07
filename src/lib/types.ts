@@ -12,6 +12,8 @@ export type Post = {
   username: string
 }
 
+export type Feed = Post[] | null
+
 export type User = {
   uid: string | undefined
   displayName: string | null | undefined

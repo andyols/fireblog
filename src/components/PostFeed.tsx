@@ -1,12 +1,12 @@
 import { Stack } from '@chakra-ui/react'
-import { Post } from '@lib/types'
+import { Feed } from '@lib/types'
 import React from 'react'
 import { PostItem } from './PostItem'
 
 interface PostFeedProps {
   admin?: Boolean
   profile?: Boolean
-  posts: Post[]
+  posts: Feed
 }
 
 export const PostFeed: React.FC<PostFeedProps> = ({
@@ -16,7 +16,7 @@ export const PostFeed: React.FC<PostFeedProps> = ({
 }) => {
   return (
     <Stack w='full' as='section'>
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <PostItem post={post} key={post.slug} admin={admin} profile={profile} />
       ))}
     </Stack>
