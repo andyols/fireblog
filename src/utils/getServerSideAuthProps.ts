@@ -16,15 +16,20 @@ export const getServerSideAuthProps = async (
   ctx: GetServerSidePropsContext
 ) => {
   // attempt to verify cookie token
+  let user = null
   try {
     const cookies = nookies.get(ctx)
-    await adminAuth.verifyIdToken(cookies.token)
+    user = await adminAuth.verifyIdToken(cookies.token)
 
-    // token is good, good to fetch data and do auth stuff
+    // token is good, return some user related props
+    const name =
+      user.provider_id === 'anonymous'
+        ? 'Anonymous User'
+        : (user.name.split(' ')[0] as string)
 
-    return { props: {} }
+    return { props: { name } }
   } catch (e) {
-    // token error so redirect to enter page
+    // token error
     return {
       redirect: {
         permanent: false,
