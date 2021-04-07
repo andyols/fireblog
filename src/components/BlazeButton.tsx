@@ -1,7 +1,9 @@
-import { Button, Text } from '@chakra-ui/react'
+import { Button, Text, useToast } from '@chakra-ui/react'
 import { DocumentReference } from '@firebase/firestore-types'
+import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, incremnet } from '@lib/firebase'
 import { Post } from '@lib/types'
+import { errorToast } from '@utils/errorToast'
 import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -48,6 +50,7 @@ export const BlazeButton: React.FC<BlazeButtonProps> = ({
   const blazeRef = postRef.collection('blazes').doc(auth.currentUser?.uid)
   const [blazeDoc] = useDocument(blazeRef)
   const userHasBlazed = blazeDoc?.exists
+  const toast = useToast()
 
   const addBlaze = async () => {
     const uid = auth.currentUser?.uid
@@ -58,7 +61,9 @@ export const BlazeButton: React.FC<BlazeButtonProps> = ({
 
     try {
       await batch.commit()
+      toast({ ...TOAST_SUCCESS, title: 'Blaze added' })
     } catch (e) {
+      errorToast(e.message)
       console.error(e.message)
     }
   }
@@ -70,7 +75,9 @@ export const BlazeButton: React.FC<BlazeButtonProps> = ({
 
     try {
       await batch.commit()
+      toast({ ...TOAST_SUCCESS, title: 'Blaze removed' })
     } catch (e) {
+      errorToast(e.message)
       console.error(e.message)
     }
   }
