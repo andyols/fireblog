@@ -25,7 +25,7 @@ export const ImageUploader: React.FC = () => {
   const [uploading, setUploading] = useState(false)
   const [userCopied, setUserCopied] = useState(false)
 
-  const MAX_IMG_SIZE = 5 // mb
+  const MAX_IMG_SIZE = 20 // mb
   const MAX_IMG_HEIGHT = 2500 // px
   const MAX_IMG_WIDTH = 2500 // px
 
