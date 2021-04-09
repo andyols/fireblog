@@ -14,7 +14,6 @@ import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
 import { errorToast } from '@utils/errorToast'
-import { isUserAnonymous } from '@utils/isUserAnonymous'
 import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -88,16 +87,14 @@ const PostForm: React.FC<PostFormProps> = ({
         isInvalid={!!errors['content']}
       >
         <Stack>
-          {!isUserAnonymous() && (
-            <Checkbox
-              colorScheme='whatsapp'
-              name='published'
-              ref={register}
-              placeSelf='start'
-            >
-              Publish?
-            </Checkbox>
-          )}
+          <Checkbox
+            colorScheme='whatsapp'
+            name='published'
+            ref={register}
+            placeSelf='start'
+          >
+            Publish?
+          </Checkbox>
           <Textarea
             name='content'
             ref={register({

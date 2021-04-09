@@ -1,9 +1,9 @@
-import { Button, Text, useColorModeValue } from '@chakra-ui/react'
+import { Button, useColorModeValue } from '@chakra-ui/react'
 import { AuthProvider } from '@firebase/auth-types'
 import { auth, githubAuthProvider, googleAuthProvider } from '@lib/firebase'
 import { errorToast } from '@utils/errorToast'
 import React from 'react'
-import { FaGoogle, FaMask } from 'react-icons/fa'
+import { FaGoogle } from 'react-icons/fa'
 import { FiGithub } from 'react-icons/fi'
 
 export const SignInButtons: React.FC = () => {
@@ -19,14 +19,7 @@ export const SignInButtons: React.FC = () => {
       console.error(e.message)
     }
   }
-  const signInAnonymously = async () => {
-    try {
-      await auth.signInAnonymously()
-    } catch (e) {
-      errorToast(e.message)
-      console.error(e.message)
-    }
-  }
+
   return (
     <>
       <Button
@@ -44,10 +37,6 @@ export const SignInButtons: React.FC = () => {
         onClick={() => signInWithProvider(githubAuthProvider)}
       >
         Sign In With GitHub
-      </Button>
-      <Text fontWeight='semibold'>OR</Text>
-      <Button leftIcon={<FaMask />} onClick={() => signInAnonymously()}>
-        Sign In Anonymously
       </Button>
     </>
   )
