@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import { useAuth } from '@lib/auth'
 import { auth } from '@lib/firebase'
-import { isUserAnonymous } from '@utils/isUserAnonymous'
 import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -27,9 +26,7 @@ export const UserMenu: React.FC = () => {
   const isMobile = breakpoint === 'base'
   const avatarOutline = '0 0 0 3px rgba(66, 153, 225, 0.6)'
 
-  const handleSignOut = () => {
-    return isUserAnonymous() ? auth.currentUser?.delete() : auth.signOut()
-  }
+  const handleSignOut = () => auth.signOut()
 
   if (!user && router.pathname !== '/enter') {
     return (

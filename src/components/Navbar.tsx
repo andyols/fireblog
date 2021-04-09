@@ -2,7 +2,7 @@ import { Button, Heading, HStack, Text } from '@chakra-ui/react'
 import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import React from 'react'
-import { ColorModeSwitch } from '../ColorModeSwitch'
+import { ColorModeSwitch } from './ColorModeSwitch'
 import { UserMenu } from './UserMenu'
 
 export const Navbar: React.FC = () => {
