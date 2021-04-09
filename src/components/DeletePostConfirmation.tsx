@@ -9,7 +9,7 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { TOAST_ERROR } from '@lib/constants'
-import { auth, firestore } from '@lib/firebase'
+import { auth, firestore, storage } from '@lib/firebase'
 import { errorToast } from '@utils/errorToast'
 import { useColors } from '@utils/useColors'
 import React, { RefObject, useRef, useState } from 'react'
@@ -31,14 +31,44 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
   const onClose = () => setIsOpen(false)
 
   const deletePost = async () => {
-    const ref = firestore
+    const postRef = firestore
       .collection('users')
       .doc(auth.currentUser?.uid)
       .collection('posts')
       .doc(slug)
 
+    const postBlazesRef = postRef.collection('blazes')
+    const postImagesRef = postRef.collection('images')
+
+    const batch = firestore.batch()
     try {
-      await ref.delete()
+      batch.delete(postRef)
+
+      // add all images to batch delete if there are any
+      if (postImagesRef) {
+        const snapshot = await postImagesRef.get()
+
+        snapshot.docs.forEach(async (doc) => {
+          batch.delete(doc.ref)
+
+          // try to delete image from storage using the image document's path field value
+          const storageRef = storage.ref(doc.data().path)
+          try {
+            await storageRef.delete()
+          } catch (e) {
+            console.error(e.message)
+          }
+        })
+      }
+
+      // add all blazes to batch delete if there are any
+      if (postBlazesRef) {
+        const snapshot = await postBlazesRef.get()
+        snapshot.docs.forEach((doc) => batch.delete(doc.ref))
+      }
+
+      // try commit this behemoth of a deletion
+      await batch.commit()
       toast({ ...TOAST_ERROR, title: 'Post annihilated! 💥' })
     } catch (e) {
       console.error(e.message)

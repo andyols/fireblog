@@ -109,7 +109,7 @@ const PostForm: React.FC<PostFormProps> = ({
             spellCheck={false}
           />
           <FormErrorMessage>{errors['content']?.message}</FormErrorMessage>{' '}
-          <ImageUploader />
+          <ImageUploader postRef={postRef} />
           <Button
             type='submit'
             colorScheme='whatsapp'
