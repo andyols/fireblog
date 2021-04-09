@@ -9,15 +9,21 @@ import {
   Progress,
   useToast
 } from '@chakra-ui/react'
+import { DocumentReference } from '@firebase/firestore-types'
 import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, STATE_CHANGED, storage } from '@lib/firebase'
+import { errorToast } from '@utils/errorToast'
 import { sizeInMB } from '@utils/sizeInMB'
 import { useColors } from '@utils/useColors'
 import { writeToClipboard } from '@utils/writeToClipboard'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import { HiClipboard, HiClipboardCheck } from 'react-icons/hi'
 
-export const ImageUploader: React.FC = () => {
+interface ImageUploaderProps {
+  postRef: DocumentReference
+}
+
+export const ImageUploader: React.FC<ImageUploaderProps> = ({ postRef }) => {
   const [url, setURL] = useState('')
   const [progress, setProgress] = useState(0)
   const [markdown, setMarkdown] = useState('')
@@ -65,32 +71,43 @@ export const ImageUploader: React.FC = () => {
       let img = new Image()
       img.src = window.URL.createObjectURL(file)
 
-      img.onload = () => {
+      img.onload = async () => {
         if (img.height > MAX_IMG_HEIGHT || img.width > MAX_IMG_WIDTH) {
           setError(
             `Image size should be less than or equal to ${MAX_IMG_WIDTH}x${MAX_IMG_HEIGHT}`
           )
           return
         }
-        setUploading(true)
 
-        // make reference to storage bucket location
-        const ref = storage.ref(
+        // new storage bucket location
+        const storageRef = storage.ref(
           `uploads/${auth.currentUser?.uid}/${Date.now()}.${ext}`
         )
+        // new post images doc
+        const imageRef = postRef.collection('images').doc(storageRef.name)
 
-        // start upload
-        const task = ref.put(file)
+        // try to create a new doc in post image subcollection
+        try {
+          await imageRef.set({ path: storageRef.fullPath })
+        } catch (e) {
+          errorToast(e.message)
+          console.error(e.message)
+          return
+        }
 
-        // listen to upload task
+        // all good, start upload
+        setUploading(true)
+        const task = storageRef.put(file)
         task.on(STATE_CHANGED, (snapshot) => {
+          // local state for progress bar
           const pct = parseInt(
             ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
           )
           setProgress(pct)
+
           // get downloadURL after task resolves (note: this is not a native Promise)
           task
-            .then(() => ref.getDownloadURL())
+            .then(() => storageRef.getDownloadURL())
             .then((url) => {
               setURL(url)
               setUploading(false)
