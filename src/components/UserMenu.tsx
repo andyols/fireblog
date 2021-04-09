@@ -76,6 +76,9 @@ export const UserMenu: React.FC = () => {
                     </Link>
 
                     <MenuDivider />
+                    <Link href={`/admin/settings`}>
+                      <MenuItem>My Account</MenuItem>
+                    </Link>
                     <Link href='/admin'>
                       <MenuItem>My Posts</MenuItem>
                     </Link>
