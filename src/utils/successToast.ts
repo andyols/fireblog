@@ -1,11 +1,11 @@
 import { createStandaloneToast } from '@chakra-ui/react'
-import { TOAST_ERROR } from '@lib/constants'
+import { TOAST_SUCCESS } from '@lib/constants'
 
 /**
- * Reusable info toast notification
+ * Reusable success toast notification
  * @param message
  */
-export const errorToast = async (
+export const successToast = async (
   description: string,
   title?: string,
   duration?: number
@@ -14,7 +14,7 @@ export const errorToast = async (
 
   toast.closeAll()
   toast({
-    ...TOAST_ERROR,
+    ...TOAST_SUCCESS,
     title,
     description,
     duration

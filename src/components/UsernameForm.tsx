@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useAuth } from '@lib/auth'
 import { firestore } from '@lib/firebase'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
 import { useColors } from '@utils/useColors'
 import debounce from 'lodash.debounce'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -76,6 +77,7 @@ export const UsernameForm: React.FC = () => {
         await batch.commit()
       } catch (e) {
         console.error(e.message)
+        firebaseErrorToast(e.message, e.code)
       }
     }
   }

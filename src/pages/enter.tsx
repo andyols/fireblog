@@ -1,4 +1,4 @@
-import { Heading, Stack } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import { Layout } from '@components/Layout'
 import { SignInButtons } from '@components/SignInButtons'
 import { UsernameForm } from '@components/UsernameForm'
@@ -18,9 +18,7 @@ const EnterPage: NextPage = () => {
           <Heading textAlign='center' fontSize={['2xl', '3xl', '4xl']}>
             👋 Welcome to Fireblog!
           </Heading>
-          <Stack pt={4} align='center'>
-            <SignInButtons />
-          </Stack>
+          <SignInButtons />
         </>
       )}
     </Layout>

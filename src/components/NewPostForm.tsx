@@ -1,10 +1,11 @@
-import { Button, FormControl, Input, useToast } from '@chakra-ui/react'
+import { Button, FormControl, Input } from '@chakra-ui/react'
 import { Timestamp } from '@firebase/firestore-types'
 import { useAuth } from '@lib/auth'
-import { TOAST_INFO, TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
-import { errorToast } from '@utils/errorToast'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
+import { infoToast } from '@utils/infoToast'
+import { successToast } from '@utils/successToast'
 import { useColors } from '@utils/useColors'
 import kebabcase from 'lodash.kebabcase'
 import React, { useState } from 'react'
@@ -13,7 +14,6 @@ type FormEvent = React.FormEvent<HTMLInputElement>
 
 export const NewPostForm: React.FC = () => {
   const { user } = useAuth()
-  const toast = useToast()
   const inputBg = useColors('paper')
   const inputBorder = useColors('border')
 
@@ -37,11 +37,7 @@ export const NewPostForm: React.FC = () => {
     const { exists } = await ref.get()
 
     if (exists) {
-      toast({
-        ...TOAST_INFO,
-        title: 'Oops!',
-        description: 'You already have a post with that title.'
-      })
+      infoToast('You already have a post with that title')
       setLoading(false)
       return
     }
@@ -60,10 +56,10 @@ export const NewPostForm: React.FC = () => {
 
     try {
       await ref.set(data)
-      toast({ ...TOAST_SUCCESS, title: 'Post created! 📃' })
+      successToast('Post created 📨')
       setTitle('')
     } catch (e) {
-      errorToast(e.message)
+      firebaseErrorToast(e.message)
       console.error(e.message)
     }
 

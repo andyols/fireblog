@@ -20,7 +20,7 @@ export const Wrapper: React.FC<WrapperProps> = ({
   const NavbarHeight = '73px'
 
   return (
-    <Flex flex='auto' justify={justify} mt={NavbarHeight}>
+    <Flex flex='auto' justify={justify} mt={NavbarHeight} h='screen'>
       <Stack
         py={
           variant === 'relaxed'
@@ -40,7 +40,8 @@ export const Wrapper: React.FC<WrapperProps> = ({
             : 'container.sm'
         }
         w='full'
-        h='full'
+        h='screen'
+        as='main'
       >
         {children}
       </Stack>
