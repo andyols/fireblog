@@ -6,14 +6,13 @@ import {
   Heading,
   HStack,
   Stack,
-  Textarea,
-  useToast
+  Textarea
 } from '@chakra-ui/react'
 import { DocumentData, DocumentReference } from '@firebase/firestore-types'
-import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, firestore, serverTimestamp } from '@lib/firebase'
 import { Post } from '@lib/types'
-import { errorToast } from '@utils/errorToast'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
+import { successToast } from '@utils/successToast'
 import { useColors } from '@utils/useColors'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -37,7 +36,6 @@ const PostForm: React.FC<PostFormProps> = ({
   postRef,
   preview
 }) => {
-  const toast = useToast()
   const [loading, setLoading] = useState(false)
 
   const { register, handleSubmit, reset, watch, formState, errors } = useForm({
@@ -59,16 +57,11 @@ const PostForm: React.FC<PostFormProps> = ({
       })
 
       reset({ content })
-
-      toast({
-        ...TOAST_SUCCESS,
-        title: `Post updated! 👍`
-      })
-
+      successToast('Post updated 📨')
       setLoading(false)
     } catch (e) {
       console.error(e.message)
-      errorToast(e.message)
+      firebaseErrorToast(e.message)
       setLoading(false)
     }
   }

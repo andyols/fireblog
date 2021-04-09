@@ -5,12 +5,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Button,
-  useToast
+  Button
 } from '@chakra-ui/react'
-import { TOAST_ERROR } from '@lib/constants'
 import { auth, firestore, storage } from '@lib/firebase'
 import { errorToast } from '@utils/errorToast'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
 import { useColors } from '@utils/useColors'
 import React, { RefObject, useRef, useState } from 'react'
 import { FiTrash } from 'react-icons/fi'
@@ -23,7 +22,6 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
   slug
 }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const toast = useToast()
   const trashColor = useColors('red')
   const cancelRef = useRef() as RefObject<HTMLButtonElement>
 
@@ -69,10 +67,10 @@ export const DeletePostConfirmation: React.FC<DeletePostConfirmationProps> = ({
 
       // try commit this behemoth of a deletion
       await batch.commit()
-      toast({ ...TOAST_ERROR, title: 'Post annihilated! 💥' })
+      errorToast('Post annihilated! 💥')
     } catch (e) {
       console.error(e.message)
-      errorToast(e.message)
+      firebaseErrorToast(e.message, e.code)
     }
   }
 

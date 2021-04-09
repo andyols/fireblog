@@ -6,14 +6,13 @@ import {
   HStack,
   IconButton,
   Input,
-  Progress,
-  useToast
+  Progress
 } from '@chakra-ui/react'
 import { DocumentReference } from '@firebase/firestore-types'
-import { TOAST_SUCCESS } from '@lib/constants'
 import { auth, STATE_CHANGED, storage } from '@lib/firebase'
-import { errorToast } from '@utils/errorToast'
+import { firebaseErrorToast } from '@utils/firebaseErrorToast'
 import { sizeInMB } from '@utils/sizeInMB'
+import { successToast } from '@utils/successToast'
 import { useColors } from '@utils/useColors'
 import { writeToClipboard } from '@utils/writeToClipboard'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
@@ -40,8 +39,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ postRef }) => {
   const codeHover = useColors('blue')
   const codeBg = useColors('paper')
   const codeBorder = useColors('border')
-
-  const toast = useToast()
 
   const uploadFile = async (e: FormEvent) => {
     setError('')
@@ -90,7 +87,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ postRef }) => {
         try {
           await imageRef.set({ path: storageRef.fullPath })
         } catch (e) {
-          errorToast(e.message)
+          firebaseErrorToast(e.message)
           console.error(e.message)
           return
         }
@@ -121,10 +118,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ postRef }) => {
 
   const copyToClipboard = () => {
     writeToClipboard(markdown)
-    toast({
-      ...TOAST_SUCCESS,
-      title: 'Markdown copied 📄'
-    })
+    successToast('Markdown copied 📋')
     setUserCopied(true)
   }
 
@@ -132,10 +126,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ postRef }) => {
   useEffect(() => {
     if (url.length && !markdown.length) {
       setMarkdown(`![alt](${url})`)
-      toast({
-        ...TOAST_SUCCESS,
-        title: 'Image Uploaded'
-      })
+      successToast('Image uploaded 📸')
     }
   }, [url])
 
