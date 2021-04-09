@@ -22,10 +22,7 @@ export const getServerSideAuthProps = async (
     user = await adminAuth.verifyIdToken(cookies.token)
 
     // token is good, return some user related props
-    const name =
-      user.provider_id === 'anonymous'
-        ? 'Anonymous User'
-        : (user.name.split(' ')[0] as string)
+    const name = user.name.split(' ')[0] as string
 
     return { props: { name } }
   } catch (e) {
